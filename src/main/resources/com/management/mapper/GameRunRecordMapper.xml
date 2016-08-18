@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.mapper.GameRunRecordMapper">
+	<resultMap id="BaseResultMap" type="com.management.model.GameRunRecord">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="account" property="account"  />
+		<result column="device_mac" property="deviceMac"  />
+		<result column="device_code" property="deviceCode"  />
+		<result column="device_name" property="deviceName"  />
+		<result column="game_code" property="gameCode"  />
+		<result column="game_name" property="gameName"  />
+		<result column="game_process" property="gameProcess"  />
+		<result column="report_time" property="reportTime"  />
+		<result column="run_count" property="runCount"  />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	<resultMap type="com.management.model.vo.DeviceReportVO" id="deviceReportResultMap" extends="BaseResultMap">
+		
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, account, device_mac, device_code, device_name, game_code, game_name,game_process
+		,report_time,run_count,create_time,update_time
+	</sql>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from game_run_record
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from game_run_record
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.management.model.GameRunRecord">
+		insert into game_run_record (
+			account, device_mac, device_code, device_name, game_code,
+		 	game_name,game_process,report_time,run_count,create_time,update_time
+		)
+		values 
+		(#{account},#{deviceMac},#{deviceCode},#{deviceName},#{gameCode}
+		,#{gameName},#{gameProcess},#{reportTime},#{runCount},#{createTime}
+		,#{updateTime}
+		)
+	</insert>
+
+	<update id="updateRunCountUnique" parameterType="com.management.model.GameRunRecord">
+		update game_run_record
+		set run_count = #{runCount},
+		update_time = now()
+		where 
+		DATE(report_time) = DATE(#{reportTime})
+		and account = #{account}
+		and  device_mac = #{deviceMac} and  device_code = #{deviceCode}  and game_process = #{gameProcess}
+	</update>
+	
+	
+	<select id="selectUniqueRecordByDateAndGame" resultMap="BaseResultMap"
+		parameterType="com.management.model.GameRunRecord">
+		select
+		<include refid="Base_Column_List" />
+		from game_run_record
+		where
+		DATE(report_time) = DATE(#{reportTime})
+		and account = #{account}
+		and  device_mac = #{deviceMac} and  device_code = #{deviceCode}  and game_process = #{gameProcess}
+		order by id limit 1
+	</select>
+	
+	
+	<select id="findDeviceReports" resultMap="deviceReportResultMap"
+		parameterType="com.management.model.vo.DeviceReportVO">
+			SELECT
+				account,
+				device_code,
+				device_mac,
+				report_time,
+				game_code,
+				game_process,
+				SUM(run_count) run_count
+			FROM
+				game_run_record
+			WHERE 1=1
+				<if test="record.account !=null and record.account !='' ">
+					and account = trim(#{record.account})
+				</if>
+				<if test="record.deviceCode !=null and record.deviceCode !='' ">
+					and device_code = trim(#{record.deviceCode})
+				</if>
+				
+				<if test="record.deviceMac !=null and record.deviceMac !='' ">
+					and device_mac = trim(#{record.deviceMac})
+				</if>
+				
+				<if test="record.gameCode !=null and record.gameCode !='' ">
+					and game_code = trim(#{record.gameCode})
+				</if>
+				
+				<if test="record.gameProcess !=null and record.gameProcess !='' ">
+					and game_process = trim(#{record.gameProcess})
+				</if>
+			GROUP BY
+				account,
+				device_code,
+				device_mac,
+				game_code,
+				game_process,
+				report_time order by report_time desc,run_count desc
+	</select>
+	
+	
+	
+	<select id="findDeviceReportsDetailsByDateAndUniqueGame" resultMap="deviceReportResultMap"
+		parameterType="com.management.model.vo.DeviceReportVO">
+			SELECT
+				*
+			FROM
+				game_run_record
+			WHERE 1=1
+				<if test="record.deviceCode !=null and record.deviceCode !='' ">
+					and device_code = trim(#{record.deviceCode})
+				</if>
+				
+				<if test="record.deviceMac !=null and record.deviceMac !='' ">
+					and device_mac = trim(#{record.deviceMac})
+				</if>
+				
+				<if test="record.gameCode !=null and record.gameCode !='' ">
+					and game_code = trim(#{record.gameCode})
+				</if>
+				
+				<if test="record.gameProcess !=null and record.gameProcess !='' ">
+					and game_process = trim(#{record.gameProcess})
+				</if>
+				
+				<if test="record.reportTime !=null  ">
+					and TO_DAYS(report_time) = TO_DAYS(#{record.reportTime})
+				</if>
+	</select>
+
+</mapper>

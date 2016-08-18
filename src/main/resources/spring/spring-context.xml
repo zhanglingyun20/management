@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+       http://www.springframework.org/schema/beans/spring-beans.xsd    
+       http://www.springframework.org/schema/tx    
+       http://www.springframework.org/schema/tx/spring-tx.xsd    
+       http://www.springframework.org/schema/aop    
+       http://www.springframework.org/schema/aop/spring-aop.xsd    
+       http://www.springframework.org/schema/context    
+       http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 扫包过滤掉controller  不然事务会失效-->
+	<context:component-scan base-package="com.management" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />  
+	</context:component-scan>
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="fileEncoding" value="utf-8" />
+		<property name="locations">
+			<list>
+				<value>classpath:config/*.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 引入jdbc配置文件 -->
+	<context:property-placeholder location="classpath:config/jdbc.properties" />
+	<!-- <util:properties id="message"
+		location="classpath:config/message.properties" /> -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+		<property name="maxActive" value="${jdbc.maxActive}"></property>
+		<property name="maxIdle" value="${jdbc.maxIdle}"></property>
+		<property name="minIdle" value="${jdbc.minIdle}"></property>
+		<property name="maxWait" value="${jdbc.maxWait}"></property>
+		<property name="removeAbandoned" value="${jdbc.removeAbandoned}"></property>
+		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"></property>
+		<property name="logAbandoned" value="${jdbc.logAbandoned}"></property>
+	</bean>
+
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 配置sql映射文件所在位置 注意：默认与mapper类位置相同 -->
+		<property name="mapperLocations" value="classpath:com/management/mapper/**/*.xml" />
+		<!----> 		    
+		<property name="plugins">
+			<bean class="com.management.common.PageInterceptor">
+				<!-- 设置分页拦截器数据库类型 -->
+				<property name="databaseType" value="mysql"></property>
+			</bean>
+		</property> 
+	</bean>
+
+	<!-- 配置事务管理器，全注解声明式事务 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.management.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<!-- 默认情况下会自动注入id=sqlSessionFactory的bean，也可以按上述方式指定sqlSessionFactory -->
+	</bean>
+
+</beans>  
