@@ -55,7 +55,6 @@
   <script type="text/javascript">
     BUI.use('common/page');
   </script>
-  </script> 
 <script type="text/javascript">
   BUI.use(['common/search','bui/overlay'],function (Search,Overlay) {
       columns = [
@@ -219,5 +218,5 @@
 	      }
 	    });
 </script>
-<body>
+</body>
 </html>  

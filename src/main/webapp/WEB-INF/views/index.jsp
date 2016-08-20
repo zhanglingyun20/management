@@ -30,8 +30,9 @@
         <li class="nav-item"><div class="nav-item-inner nav-inventory">搜索页</div></li>
         <li class="nav-item"><div class="nav-item-inner nav-supplier">详情页</div></li> -->
         <li class="nav-item"><div class="nav-item-inner nav-system">系统管理</div></li>
-        <li class="nav-item"><div class="nav-item-inner nav-report">数据统计</div></li>
+        <li class="nav-item"><div class="nav-item-inner nav-report">股东中心</div></li>
         <li class="nav-item"><div class="nav-item-inner nav-operate">运营管理</div></li>
+          <li class="nav-item"><div class="nav-item-inner nav-operate">监控管理</div></li>
       </ul>
     </div>
     <ul id="J_NavContent" class="dl-tab-conten">
@@ -137,22 +138,49 @@
             },{
                 id:'report',
                 menu:[{
-                    text:'数据统计',
+                    text:'销售额统计',
                     items:[
                       /* {id:'site',text:'场地统计',href:'site'}, */
-                      {id:'device',text:'设备统计',href:'report/device'}
+                      {id:'all_price',text:'总销售额',href:'report/all'},
+                      {id:'province_price',text:'省份销售额',href:'report/province'},
+                      {id:'city_price',text:'城市销售额',href:'report/city'},
+                      {id:'store_price',text:'场地销售额',href:'report/store'},
+                      {id:'device_price',text:'设备销售额',href:'report/device'}
+
                     ]
-                  }]
+                  }, {
+                  text:'运行统计',
+                  items:[
+                      /* 1可以根据省城市场地和设备对游戏运行情况进行统计，以便人工来对账
+                      *  2二级菜单为 游戏运行细节，具体多少次，每次的运行时长
+                      *  3这是
+                      * */
+                      {id:'',text:'游戏运行统计',href:'report/game'},
+
+                  ]
+              }]
               },{
                   id:'operate',
                   menu:[{
                       text:'运营管理',
                       items:[
                         {id:'game',text:'游戏管理',href:'game/index'},
-                        {id:'site',text:'场地管理',href:'site/index'}
+                        {id:'site',text:'场地管理',href:'site/index'},
+                        {id:'price',text:'游戏定价',href:'game/price'},
                       ]
                     }]
-                }];
+                }, {
+              id:'monitor',
+              menu:[{
+                  text:'监控管理',
+                  items:[
+                      {id:'map',text:'场地分布',href:'monitor/map'}
+
+                  ]
+              }]
+          }
+
+      ];
       new PageUtil.MainPage({
         modulesConfig : config
       });

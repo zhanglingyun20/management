@@ -91,7 +91,6 @@
   <script type="text/javascript">
     BUI.use('common/page');
   </script>
-  </script> 
 <script type="text/javascript">
   BUI.use(['common/search','bui/overlay'],function (Search,Overlay) {
       editing = new BUI.Grid.Plugins.DialogEditing({
@@ -234,5 +233,5 @@
 	      }
 	    });
 </script>
-<body>
+</body>
 </html>  
