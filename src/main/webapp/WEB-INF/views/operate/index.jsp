@@ -30,7 +30,7 @@
         <li class="nav-item"><div class="nav-item-inner nav-inventory">搜索页</div></li>
         <li class="nav-item"><div class="nav-item-inner nav-supplier">详情页</div></li> -->
         <li class="nav-item"><div class="nav-item-inner nav-system">系统管理</div></li>
-        <li class="nav-item"><div class="nav-item-inner nav-report">数据统计</div></li>
+        <li class="nav-item"><div class="nav-item-inner nav-report">股东中心</div></li>
         <li class="nav-item"><div class="nav-item-inner nav-operate">运营管理</div></li>
       </ul>
     </div>
@@ -137,10 +137,12 @@
             },{
                 id:'report',
                 menu:[{
-                    text:'数据统计',
+                    text:'股东中心',
                     items:[
                       /* {id:'site',text:'场地统计',href:'site'}, */
-                      {id:'device',text:'设备统计',href:'report/device'}
+                      {id:'device',text:'设备统计',href:'report/device'},
+                      {id:'device',text:'场地统计',href:'report/store'},
+                      {id:'device',text:'城市统计',href:'report/city'},
                     ]
                   }]
               },{
@@ -152,7 +154,17 @@
                         {id:'site',text:'场地管理',href:'site/index'}
                       ]
                     }]
-                }];
+                },{
+              id:'monitor',
+              menu:[{
+                  text:'监控管理',
+                  items:[
+                      {id:'map',text:'场地分布',href:'monitor/map'}
+
+                  ]
+              }]
+          }
+                ];
       new PageUtil.MainPage({
         modulesConfig : config
       });

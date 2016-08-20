@@ -29,6 +29,21 @@
             </div>
           </div>
         </div>
+<%--
+
+        <div class="control-group span8">
+          <label class="control-label">计费时长(分钟)：</label>
+          <div class="controls">
+            <input type="text" class="control-text" name="gamePriceMinute">
+          </div>
+
+          <div class="control-group span8">
+            <label class="control-label">游戏价格(次)：</label>
+            <div class="controls">
+              <input type="text" class="control-text" name="gamePrice">
+          </div>
+--%>
+
         <div class="row">
           <div class="control-group span8">
             <label class="control-label">状态：</label>
@@ -97,7 +112,6 @@
   <script type="text/javascript">
     BUI.use('common/page');
   </script>
-  </script> 
 <script type="text/javascript">
   BUI.use(['common/search','bui/overlay'],function (Search,Overlay) {
       editing = new BUI.Grid.Plugins.DialogEditing({
@@ -107,12 +121,14 @@
         
         }),
       columns = [
-		  {title:'序号',dataIndex:'id',width:'10%'},
+		  {title:'序号',dataIndex:'id',width:'5%'},
           {title:'游戏进程',dataIndex:'gameProcess',width:'20%'},
           {title:'游戏名称',dataIndex:'gameName',width:'20%'},
-          {title:'游戏编号',dataIndex:'gameCode',width:'20%'},
-          {title:'游戏版本',dataIndex:'gameVersion',width:'20%'},
-          {title:'游戏状态',dataIndex:'state',width:'20%',
+          {title:'游戏编号',dataIndex:'gameCode',width:'15%'},
+          {title:'计费时长(/分钟)',dataIndex:'gamePriceMinute',width:'10%'},
+          {title:'游戏价格(次*元)',dataIndex:'gamePrice',width:'10%'},
+          {title:'游戏版本',dataIndex:'gameVersion',width:'8%'},
+          {title:'游戏状态',dataIndex:'state',width:'7%',
         	  renderer : function(value)
         	  {
         		  if ('active'==value) {return "正常"}
@@ -229,5 +245,5 @@
 	      }
 	    });
 </script>
-<body>
+</body>
 </html>  
