@@ -29,21 +29,7 @@
             </div>
           </div>
         </div>
-<%--
-
-        <div class="control-group span8">
-          <label class="control-label">计费时长(分钟)：</label>
-          <div class="controls">
-            <input type="text" class="control-text" name="gamePriceMinute">
-          </div>
-
-          <div class="control-group span8">
-            <label class="control-label">游戏价格(次)：</label>
-            <div class="controls">
-              <input type="text" class="control-text" name="gamePrice">
-          </div>
---%>
-
+<%----%>
         <div class="row">
           <div class="control-group span8">
             <label class="control-label">状态：</label>
@@ -104,6 +90,27 @@
           </div>
         </div>
         
+       <div class="row">
+	        <div class="control-group span8">
+	        	  <label class="control-label">计费时长(分钟)：</label>
+	          <div class="controls">
+	            <input type="text" class="control-text" name="billingTime"  data-rules="{number:true}">
+	          </div>
+			</div>
+        </div>
+                
+       <div class="row">
+          <div class="control-group span8">
+            <label class="control-label">游戏价格(元/次)：</label>
+            <div class="controls">
+              <input type="text" class="control-text" name="defaultPrice"  data-rules="{number:true}">
+          </div>
+        </div>
+        </div>
+        
+
+
+        
       </form>
     </div>
   <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-1.8.1.min.js"></script>
@@ -125,8 +132,8 @@
           {title:'游戏进程',dataIndex:'gameProcess',width:'20%'},
           {title:'游戏名称',dataIndex:'gameName',width:'20%'},
           {title:'游戏编号',dataIndex:'gameCode',width:'15%'},
-          {title:'计费时长(/分钟)',dataIndex:'gamePriceMinute',width:'10%'},
-          {title:'游戏价格(次*元)',dataIndex:'gamePrice',width:'10%'},
+          {title:'计费时长(分钟)',dataIndex:'billingTime',width:'10%'},
+          {title:'游戏价格(元/次)',dataIndex:'defaultPrice',width:'10%'},
           {title:'游戏版本',dataIndex:'gameVersion',width:'8%'},
           {title:'游戏状态',dataIndex:'state',width:'7%',
         	  renderer : function(value)

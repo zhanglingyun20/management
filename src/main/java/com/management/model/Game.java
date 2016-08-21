@@ -39,7 +39,10 @@ public class Game {
      * 创建时间
      */
     private Date createTime;
+    
+    private Double defaultPrice;
 
+    private Integer billingTime;
     
 	public enum State {
 		ACTIVE("active"), FORBIDDEN("forbidden");
@@ -121,16 +124,53 @@ public class Game {
 		return typeList;
 	}
 	
+	
+	
+	public Double getDefaultPrice() {
+		return defaultPrice;
+	}
+
+	public void setDefaultPrice(Double defaultPrice) {
+		this.defaultPrice = defaultPrice;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Game [id=" + id + ", gameCode=" + gameCode + ", gameName="
 				+ gameName + ", gameVersion=" + gameVersion + ", gameProcess="
 				+ gameProcess + ", state=" + state + ", createTime="
-				+ createTime + "]";
+				+ createTime + ", defaultPrice=" + defaultPrice
+				+ ", billingTime=" + billingTime + "]";
+	}
+
+	public Game(Integer id, String gameCode, String gameName,
+			String gameVersion, String gameProcess, String state,
+			Date createTime, Double defaultPrice, Integer billingTime) {
+		super();
+		this.id = id;
+		this.gameCode = gameCode;
+		this.gameName = gameName;
+		this.gameVersion = gameVersion;
+		this.gameProcess = gameProcess;
+		this.state = state;
+		this.createTime = createTime;
+		this.defaultPrice = defaultPrice;
+		this.billingTime = billingTime;
 	}
 
 	public Game() {
 		super();
 	}
+
+	public Integer getBillingTime() {
+		return billingTime;
+	}
+
+	public void setBillingTime(Integer billingTime) {
+		this.billingTime = billingTime;
+	}
     
+	
 }
