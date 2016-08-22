@@ -28,4 +28,6 @@ public interface UsersMapper {
     Users selectByAccountAndPwd(@Param("account") String account,@Param("password") String password);
     
     List<Users> findUsersByAccountAndUsername(Page<Users> page,@Param("user")Users user);
+    
+    List<Users> getUserByUserType(@Param("userType") String userType);
 }

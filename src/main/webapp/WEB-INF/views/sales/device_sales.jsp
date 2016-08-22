@@ -17,15 +17,9 @@
         <form id="searchForm" class="form-horizontal span24">
             <div class="row">
                 <div class="control-group span8">
-                    <label class="control-label">场地账号：</label>
+                    <label class="control-label">设备名称：</label>
                     <div class="controls">
-                        <input type="text" class="control-text" name="account">
-                    </div>
-                </div>
-                <div class="control-group span8">
-                    <label class="control-label">设备mac：</label>
-                    <div class="controls">
-                        <input type="text" class="control-text" name="deviceMac">
+                        <input type="text" class="control-text" name="deviceName">
                     </div>
                 </div>
                 <div class="control-group span8">
@@ -34,21 +28,7 @@
                         <input type="text" class="control-text" name="deviceCode">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="control-group span8">
-                    <label class="control-label">游戏编号：</label>
-                    <div class="controls">
-                        <input type="text" class="control-text" name="gameCode">
-                    </div>
-                </div>
-                <div class="control-group span8">
-                    <label class="control-label">游戏进程：</label>
-                    <div class="controls">
-                        <input type="text" class="control-text" name="gameProcess">
-                    </div>
-                </div>
-                <div class="span3 offset5">
+             <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>
             </div>
@@ -75,29 +55,18 @@
 
          }), */
         columns = [
-            {title:'场地名称',dataIndex:'siteName',width:'10%'},
-            {title:'场地级别',dataIndex:'siteLevel',width:'10%'},
             {title:'设备编号',dataIndex:'deviceCode',width:'10%'},
             {title:'设备名称',dataIndex:'deviceName',width:'10%'},
-            {title:'设备mac',dataIndex:'deviceMac',width:'20%'},
-            {title:'游戏进程',dataIndex:'gameProcess',width:'20%'},
-            {title:'游戏名称',dataIndex:'gameName',width:'20%'},
-            {title:'游戏编号',dataIndex:'gameCode',width:'20%'},
-            {title:'运行次数',dataIndex:'runCount',width:'10%',renderer : function(value,obj){
+            {title:'总销售额(元)',dataIndex:'sales',width:'20%'},
+            {title:'设备销售详情',dataIndex:'sales',width:'10%',renderer : function(value,obj){
                 var str =  Search.createLink({ //链接使用 此方式
                     id : 'edit' + value,
-                    title : '游戏当日运行次数',
-                    text : value,
-                    href : 'report/device_details?deviceCode='+obj.deviceCode+'&deviceMac='+obj.deviceMac+'&gameProcess='+obj.gameProcess+'&gameCode='+obj.gameCode+'&reportTime='+new Date(obj.reportTime).toLocaleDateString()
+                    title : '设备销售详情',
+                    text : "设备销售详情",
+                    href : 'sales/device_sales_details?deviceCode='+obj.deviceCode
                 });
                 return str;
-            }},
-            {title:'运行日期',dataIndex:'reportTime',width:'20%',
-                renderer : function(value)
-                {
-                    if (value!='') {return new Date(value).toLocaleDateString()}
-                }
-            }
+            }}
         ],
 
                 gridCfg = Search.createGridCfg(columns,{
@@ -111,7 +80,7 @@
                     /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
                 });
 
-        store = Search.createStore('report_game_list',
+        store = Search.createStore('device_sales_list',
                 {
                     sortInfo : {
                         field : 'runCount',

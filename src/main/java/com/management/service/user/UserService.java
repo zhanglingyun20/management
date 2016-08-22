@@ -136,4 +136,10 @@ public class UserService {
 		}
 		return Result.success().addObject(record);
 	}
+	
+	
+	public Result getUserByUserType(String userType){
+		
+		return Result.success().addObject(usersMapper.getUserByUserType(userType));
+	}
 }

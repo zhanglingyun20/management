@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
@@ -84,6 +85,7 @@
                 <option value="">请选择</option>
                 <option value="site">场地</option>
                 <option value="system">管理员</option>
+                <option value="shareholders">股东</option>
               </select>
             </div>
           </div>
@@ -97,7 +99,7 @@
         </div>
      <div id="site_div" class="hide">
             <div class="row">
-	          <div class="control-group span15">
+	          <div class="control-group span10">
 	            <label class="control-label">所在地：</label>
 	            <div class="controls bui-form-group-select"  data-type="city">
 	              <select  class="input-small" name="province">
@@ -106,8 +108,18 @@
 	              <select class="input-small"  name="city" ><option  value="">选择市</option></select>
 	              <select class="input-small"  name="county" ><option  value="">选择区</option></select>
 	            </div>
-	          </div>
         	</div>
+	      </div>
+	      <div class="row">
+	      	  <div class="control-group span8">
+	            <label class="control-label"><s></s>选择股东：</label>
+	            <div class="controls">
+	             <select class="input-small"  name="shareholdersId" onchange="gradeChange()" >
+	                <option value="">请选择</option>
+	              </select>
+	            </div>
+	          </div>
+	      </div>    
 	      <div class="row">
 	          <div class="control-group span8">
 	            <label class="control-label"><s>*</s>场地级别：</label>
@@ -126,7 +138,7 @@
               <input name="siteName" type="text"  class="input-normal control-text">
             </div>
           </div>
-	        </div>
+	     </div>
 	        <div class="row">
 	          <div class="control-group span15">
 	            <label class="control-label">备注：</label>
@@ -168,6 +180,7 @@
         	  {
         		  if ('system'==value) {return "管理员"}
         		  if ('site'==value) {return "场地账号"}
+        		  if ('shareholders'==value) {return "股东"}
           	  }
           }
         ],
@@ -247,7 +260,6 @@
     
   });
   
-  
   $(function(){
 	  $("select[name='userType']").change(function(){
 		  var $_type = $(this).val();
@@ -257,6 +269,29 @@
 			  removeSite();
 		  }
 	  });
+	  
+	  
+	  var user_select = $("select[name='shareholdersId']");
+		$.ajax({
+			url : 'getUserType',
+			dataType : 'json',
+			type : 'post',
+			data : {
+				"userType" : "shareholders"
+			},
+			success : function(data) {
+				if (data.code=='success') 
+				{ 
+					var userList = data.content;
+					for (var i = 0; i < userList.length; i++) 
+					{
+						var obj = userList[i];
+						user_select.append("<option value='"+obj.id+"'>"+obj.username+"</option>");
+					}
+				} 
+			}
+		});
+	  console.info(aa)
   });
   
   function showSite(){
@@ -267,7 +302,6 @@
 	  $("div[id='site_div']").hide();
   }
   
-
 	var Overlay = BUI.Overlay,
 	Form = BUI.Form;
 	var form = new Form.HForm({

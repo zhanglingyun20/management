@@ -12,6 +12,7 @@
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
 		<result column="site_level" property="siteLevel" jdbcType="VARCHAR" />
 		<result column="site_code" property="siteCode" jdbcType="VARCHAR" />
+		<result column="shareholders_id" property="shareholdersId" jdbcType="INTEGER" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
@@ -20,7 +21,7 @@
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, parent_id, user_id, site_name, province, city, county,remark,site_code,site_level,
-		create_time
+		shareholders_id,create_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
@@ -53,13 +54,13 @@
 	</delete>
 	<insert id="insert" parameterType="com.management.model.Site" useGeneratedKeys="true" keyProperty="id">
 		insert into site (parent_id, user_id,
-		site_name, province, city,county,remark,site_level
+		site_name, province, city,county,remark,site_level,shareholders_id,
 		site_code, create_time)
 		values (
 		#{parentId},
 		#{userId},
 		#{siteName}, #{province}, #{city},
-		#{county},#{remark},#{siteLevel},
+		#{county},#{remark},#{siteLevel},#{shareholdersId},
 		#{siteCode}, #{createTime})
 	</insert>
 	<insert id="insertSelective" parameterType="com.management.model.Site" useGeneratedKeys="true" keyProperty="id">
@@ -91,6 +92,10 @@
 			</if>
 			<if test="siteLevel != null">
 				site_level,
+			</if>
+			
+			<if test="shareholdersId != null">
+				shareholders_id,
 			</if>
 			<if test="siteCode != null">
 				site_code,
@@ -127,6 +132,10 @@
 			<if test="siteLevel != null">
 				#{siteLevel,jdbcType=VARCHAR},
 			</if>
+			<if test="shareholdersId != null">
+				#{shareholdersId},
+			</if>
+			
 			<if test="siteCode != null">
 				#{siteCode,jdbcType=VARCHAR},
 			</if>

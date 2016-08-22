@@ -17,14 +17,15 @@
 	</context:component-scan>
 	<!-- 添加注解驱动 -->
 	<mvc:annotation-driven />
-<!-- 	<mvc:interceptors>
+	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/user/**" />
-			<mvc:exclude-mapping path="/sync/**" />
-			<mvc:exclude-mapping path="/index" />
+			<mvc:mapping path="/game/**" />
+			<mvc:mapping path="/site/**" />
+			<mvc:mapping path="/report/**" />
 			<bean class="com.management.controller.common.UserInterceptor"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors>
     <!-- configure the InternalResourceViewResolver -->
     	<!-- 静态资源处理 -->
 	<mvc:resources mapping="/assets/**" location="/assets/" />
