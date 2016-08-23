@@ -15,21 +15,20 @@
 <div class="container">
     <div class="row">
         <form id="searchForm" class="form-horizontal span24">
-        <input type="hidden" name ="deviceCode" value="${deviceCode}">
             <div class="row">
                 <div class="control-group span8">
-                    <label class="control-label">游戏名称：</label>
+                    <label class="control-label">场地账号：</label>
                     <div class="controls">
-                        <input type="text" class="control-text" name="gameName">
+                        <input type="text" class="control-text" name="account">
                     </div>
                 </div>
                 <div class="control-group span8">
-                    <label class="control-label">游戏编码：</label>
+                    <label class="control-label">场地名称：</label>
                     <div class="controls">
-                        <input type="text" class="control-text" name="gameCode">
+                        <input type="text" class="control-text" name="siteName">
                     </div>
                 </div>
-                 <div class="span3 offset5">
+             <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>
             </div>
@@ -56,11 +55,18 @@
 
          }), */
         columns = [
-            {title:'游戏名称',dataIndex:'gameName',width:'20%'},
-            {title:'游戏编号',dataIndex:'gameCode',width:'20%'},
-            {title:'单价',dataIndex:'price',width:'20%'},
-            {title:'运行次数',dataIndex:'runCount',width:'20%'},
-            {title:'总销售额(元)',dataIndex:'sales',width:'20%'}
+            {title:'场地账号',dataIndex:'account',width:'10%'},
+            {title:'场地名称',dataIndex:'siteName',width:'10%'},
+            {title:'总销售额(元)',dataIndex:'sales',width:'20%'},
+            {title:'场地销售详情',dataIndex:'sales',width:'10%',renderer : function(value,obj){
+                var str =  Search.createLink({ //链接使用 此方式
+                    id : 'edit' + value,
+                    title : '设备销售详情',
+                    text : "设备销售详情",
+                    href : 'sales/device_sales_details?deviceCode='+obj.deviceCode
+                });
+                return str;
+            }}
         ],
 
                 gridCfg = Search.createGridCfg(columns,{
@@ -74,16 +80,13 @@
                     /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
                 });
 
-        store = Search.createStore('device_sales_details_list',
+        store = Search.createStore('site_sales_list',
                 {
                     sortInfo : {
                         field : 'sales',
                         direction : 'desc'
                     },
                     autoLoad : true,
-           		 	params : {
-        			 deviceCode : '${deviceCode}'
-        		  },
                     pageSize : 15,
                     proxy : {
                         method : 'post',

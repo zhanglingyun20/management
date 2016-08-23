@@ -1,21 +1,36 @@
 package com.management.model.vo;
 
-public class DeviceSalesVO {
+import com.management.model.Game;
 
-	private String deviceName;
+public class GameVO extends Game{
+
 	/**
 	 * 销售额
 	 */
 	private Double sales;
 	
 	private String deviceCode;
+	
+	private Integer runCount;
+	
+	private Double price;
+	
 
-	public String getDeviceName() {
-		return deviceName;
+	
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setDeviceName(String deviceName) {
-		this.deviceName = deviceName;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Integer getRunCount() {
+		return runCount;
+	}
+
+	public void setRunCount(Integer runCount) {
+		this.runCount = runCount;
 	}
 
 	public Double getSales() {
@@ -25,6 +40,7 @@ public class DeviceSalesVO {
 	public void setSales(Double sales) {
 		this.sales = sales;
 	}
+
 	public String getDeviceCode() {
 		return deviceCode;
 	}
@@ -32,5 +48,6 @@ public class DeviceSalesVO {
 	public void setDeviceCode(String deviceCode) {
 		this.deviceCode = deviceCode;
 	}
+	
 	
 }

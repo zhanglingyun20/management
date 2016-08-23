@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.management.common.Page;
 import com.management.model.Game;
 import com.management.model.Site;
+import com.management.model.vo.DeviceVO;
 import com.management.model.vo.SiteVO;
 
 public interface SiteMapper {
@@ -28,6 +29,8 @@ public interface SiteMapper {
 	List<SiteVO> findSites(Page<SiteVO> page,@Param("site")SiteVO siteVO);
 	
 	Site selectBySiteByAccount(@Param("account")String account);
+	
+	List<SiteVO> getBySiteByAccountAndSiteName(Page<SiteVO> page,@Param("record")SiteVO record);
 	
 	
 }

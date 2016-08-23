@@ -6,9 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.management.common.Page;
 import com.management.model.GameRunRecord;
-import com.management.model.vo.DeviceDetailsSalesVO;
 import com.management.model.vo.DeviceReportVO;
-import com.management.model.vo.DeviceSalesVO;
+import com.management.model.vo.GameVO;
 
 public interface GameRunRecordMapper {
 
@@ -26,8 +25,9 @@ public interface GameRunRecordMapper {
 	
 	List<DeviceReportVO> findDeviceReportsDetailsByDateAndUniqueGame(Page<DeviceReportVO> page,@Param("record")DeviceReportVO record);
 	
-	List<DeviceReportVO> findDeviceSales(Page<DeviceSalesVO> page,@Param("record")DeviceSalesVO record);
+	List<GameVO> getDeviceGamesRunCountByPage(Page<GameVO> page,@Param("record")GameVO record);
 	
-	List<DeviceReportVO> findDeviceSalesDetails(Page<DeviceDetailsSalesVO> page,@Param("record")DeviceDetailsSalesVO record);
+	List<GameRunRecord> getDeviceGamesRunCount(@Param("deviceCode")String deviceCode);
 	
+	List<GameRunRecord> getSiteDeviceGamesRunCountByAccount(@Param("account")String account);
 }

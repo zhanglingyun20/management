@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.management.common.Page;
-import com.management.model.vo.DeviceDetailsSalesVO;
-import com.management.model.vo.DeviceSalesVO;
+import com.management.model.vo.DeviceVO;
+import com.management.model.vo.GameVO;
+import com.management.model.vo.SiteVO;
 import com.management.service.report.ReportService;
+import com.management.service.sales.SaleService;
 
 /**
  * 
@@ -24,6 +26,9 @@ public class SalesController
 	@Autowired
 	private ReportService reportService;
 	
+	@Autowired
+	private SaleService saleService;
+	
 	@RequestMapping(value = "/device_sales")
 	public String device()
 	{    
@@ -31,9 +36,9 @@ public class SalesController
 	}
 	
 	@RequestMapping(value = "/device_sales_list")
-	public @ResponseBody Page<DeviceSalesVO> deviceList (Page<DeviceSalesVO> page,DeviceSalesVO record)
+	public @ResponseBody Page<DeviceVO> deviceList (Page<DeviceVO> page,DeviceVO record)
 	{
-		return reportService.findDeviceSales(page, record);
+		return saleService.getDeviceSales(page, record);
 	}
 	
 	
@@ -46,8 +51,21 @@ public class SalesController
 	
 	
 	@RequestMapping(value = "/device_sales_details_list")
-	public @ResponseBody Page<DeviceDetailsSalesVO> deviceSalesDetails (Page<DeviceDetailsSalesVO> page,DeviceDetailsSalesVO record)
+	public @ResponseBody Page<GameVO> deviceSalesDetails (Page<GameVO> page,GameVO record)
 	{
-		return reportService.findDeviceSalesDetails(page, record);
+		return saleService.getDeviceGamesSales(page, record);
+	}
+	
+	
+	@RequestMapping(value = "/site_sales")
+	public String siteSales()
+	{    
+		return "sales/site_sales";
+	}
+	
+	@RequestMapping(value = "/site_sales_list")
+	public @ResponseBody Page<SiteVO> siteSalesList (Page<SiteVO> page,SiteVO record)
+	{
+		return saleService.getBySiteByAccountAndSiteName(page, record);
 	}
 }

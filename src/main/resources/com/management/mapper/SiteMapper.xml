@@ -19,6 +19,25 @@
 	<resultMap id="voResultMap" type="com.management.model.vo.SiteVO" extends ="BaseResultMap" >
 		<result column="account" property="account" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	
+	<select id="getBySiteByAccountAndSiteName" resultMap="voResultMap"
+		parameterType="com.management.model.vo.DeviceVO">
+		select
+			users.account,
+			site.*
+		from site left join users on site.user_id = users.id
+		where  1=1 
+		<if test="record.account !=null and record.account !='' ">
+			and users.account = #{record.account}
+		</if>
+		
+		<if test="record.siteName != null and record.siteName != '' ">
+			and site_name  = #{record.siteName}
+		</if>
+		
+	</select>
+	
 	<sql id="Base_Column_List">
 		id, parent_id, user_id, site_name, province, city, county,remark,site_code,site_level,
 		shareholders_id,create_time

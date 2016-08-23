@@ -18,7 +18,11 @@
 
 	<resultMap type="com.management.model.vo.DeviceReportVO" id="deviceReportResultMap"
 		extends="BaseResultMap">
-
+	</resultMap>
+	
+	<resultMap type="com.management.model.vo.GameVO" id="GameVOResultMap">
+		<result column="game_code" property="gameCode" />
+		<result column="run_count" property="runCount" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, account, device_mac, device_code, device_name,
@@ -151,49 +155,38 @@
 		</if>
 	</select>
 
-	<select id="findDeviceSales" resultMap="deviceReportResultMap"
-		parameterType="com.management.model.vo.DeviceSalesVO">
+	<select id="getDeviceGamesRunCount" resultMap="BaseResultMap" >
 		SELECT
-		device.device_name,
-		sales.*
+			game_code,
+			SUM(run_count) run_count
 		FROM
-		(
-		SELECT
-		device_code,
-		SUM(run_count) run_count,
-		game_code
-		FROM
-		game_run_record
-		GROUP BY
-		device_code,
-		game_code
-		) sales
-		LEFT JOIN device ON sales.device_code = device.device_code
-		where
-		1=1
-		<if test="record.deviceName !=null and record.deviceName !='' ">
-			and device.device_name = trim(#{record.deviceName})
-		</if>
-
-		<if test="record.deviceCode !=null and record.deviceCode !='' ">
-			and device.device_code = trim(#{record.deviceCode})
-		</if>
-		order by device.id desc
+			game_run_record
+		WHERE
+			device_code = #{deviceCode}
+		GROUP BY game_code
 	</select>
-
-
-
-
-	<select id="findDeviceSalesDetails" resultMap="deviceReportResultMap"
-		parameterType="com.management.model.vo.DeviceDetailsSalesVO">
+	
+	<select id="getSiteDeviceGamesRunCountByAccount" resultMap="BaseResultMap" >
 		SELECT
-			*
-		FROM game_run_record
-		where 1=1
-		<if test="record.deviceCode !=null and record.deviceCode !='' ">
-			and device_code = trim(#{record.deviceCode})
-		</if>
-		
+			account,
+			game_code,
+			SUM(run_count) run_count
+		FROM
+			game_run_record
+		WHERE
+			account = #{account}
+		GROUP BY account,game_code
+	</select>
+	
+	
+	<select id="getDeviceGamesRunCountByPage" resultMap="GameVOResultMap"  parameterType="com.management.model.vo.GameVO">
+		SELECT
+			game_code,
+			SUM(run_count) run_count
+		FROM
+			game_run_record
+		WHERE
+			device_code = #{record.deviceCode}
 		<if test="record.gameName !=null and record.gameName !='' ">
 			and game_name = trim(#{record.gameName})
 		</if>
@@ -201,15 +194,8 @@
 		<if test="record.gameCode !=null and record.gameCode !='' ">
 			and game_code = trim(#{record.gameCode})
 		</if>
-
-		<if test="record.startTime !=null and record.startTime!='' ">
-			<![CDATA[ and TO_DAYS(report_time) >= TO_DAYS(#{record.startTime}) ]]>
-		</if>
-
-		<if test="record.endTime !=null  and record.endTime!='' ">
-			<![CDATA[ and TO_DAYS(report_time) <= TO_DAYS(#{record.endTime}) ]]>
-		</if>
-		order by id desc
+		GROUP BY game_code
+		order by run_count desc
 	</select>
 
 </mapper>

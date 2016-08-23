@@ -1,8 +1,12 @@
 package com.management.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
+import com.management.common.Page;
 import com.management.model.Device;
+import com.management.model.vo.DeviceVO;
 
 public interface DeviceMapper {
 
@@ -19,4 +23,6 @@ public interface DeviceMapper {
 	int updateByPrimaryKey(Device record);
 	
 	Device selectByDeviceMac(@Param("deviceMac")String deviceMac);
+	
+	List<DeviceVO> getDevicesByNameAndCode(Page<DeviceVO> page,@Param("record")DeviceVO record);
 }
