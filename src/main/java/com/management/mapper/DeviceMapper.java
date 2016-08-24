@@ -24,5 +24,7 @@ public interface DeviceMapper {
 	
 	Device selectByDeviceMac(@Param("deviceMac")String deviceMac);
 	
+	Device selectByDeviceCode(@Param("deviceCode")String deviceCode);
+	
 	List<DeviceVO> getDevicesByNameAndCode(Page<DeviceVO> page,@Param("record")DeviceVO record);
 }

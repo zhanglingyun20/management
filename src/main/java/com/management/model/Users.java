@@ -66,7 +66,7 @@ public class Users {
 	}
 
 	public enum Type {
-		SYSTEM("system"), DEVICE("site"), SHAREHOLDERS("shareholders");
+		SYSTEM("system"), SITE("site"), SHAREHOLDERS("shareholders");
 		private final String value;
 
 		Type(String value) {

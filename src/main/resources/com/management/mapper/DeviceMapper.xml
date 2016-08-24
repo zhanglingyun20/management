@@ -50,13 +50,22 @@
 		from device
 		where device_mac = #{deviceMac,jdbcType=VARCHAR}
 	</select>
+	
+	<select id="selectByDeviceCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from device
+		where device_code = #{deviceCode,jdbcType=VARCHAR}
+		limit 1
+	</select>
 
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from device
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="com.management.model.Device">
+	<insert id="insert" parameterType="com.management.model.Device" keyProperty="id" useGeneratedKeys="true">
 		insert into device (id, site_id, device_mac,
 		device_code, device_name, create_time
 		)

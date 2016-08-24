@@ -58,7 +58,7 @@ public class UserService {
 			user.setPassword(MD5Util.MD5(user.getPassword()));
 			usersMapper.insert(user);
 			//场地
-			if (Users.Type.DEVICE.getValue().equals(user.getUserType())) {
+			if (Users.Type.SITE.getValue().equals(user.getUserType())) {
 				if (Objects.isNull(site)) {
 					throw new IllegalArgumentException("参数有误");
 				}
