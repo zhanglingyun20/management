@@ -7,6 +7,20 @@ public class SiteVO extends Site{
 	private String account;
 	
 	private Integer fixPriceGameCount;
+	
+	
+	/**
+	 * 销售额
+	 */
+	private Double sales;
+
+	public Double getSales() {
+		return sales;
+	}
+
+	public void setSales(Double sales) {
+		this.sales = sales;
+	}
 
 	public String getAccount() {
 		return account;

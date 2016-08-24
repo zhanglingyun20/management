@@ -9,7 +9,36 @@ public class DeviceReportVO extends GameRunRecord {
 	private String gameName;
 	private String siteLevel;
 	
+	private String startTime;
 	
+	private String endTime;
+	
+	/**
+	 * 销售额
+	 */
+	private Double sales;
+	
+	/**
+	 * 单价
+	 */
+	private Double price;
+	
+	
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
 
 	public String getSiteLevel() {
 		return siteLevel;
@@ -43,4 +72,21 @@ public class DeviceReportVO extends GameRunRecord {
 		this.gameName = gameName;
 	}
 
+	public Double getSales() {
+		return sales;
+	}
+
+	public void setSales(Double sales) {
+		this.sales = sales;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	
 }

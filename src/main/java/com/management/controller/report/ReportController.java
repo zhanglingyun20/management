@@ -34,9 +34,19 @@ public class ReportController
 	{    
 		return "report/report_device";
 	}
+
+	/**
+	 * MiHalo
+	 * 查询游戏运行的次数，可以查询多少分钟以上的有运行多少次
+	 * */
+	@RequestMapping(value = "/report_game")
+	public String game()
+	{
+		return "report/report_game";
+	}
 	
 	
-	@RequestMapping(value = "/device_list")
+	@RequestMapping(value = "/report_game_list")
 	public @ResponseBody Page<DeviceReportVO> deviceList (Page<DeviceReportVO> page,DeviceReportVO record)
 	{
 		return reportService.findDeviceReports(page, record);

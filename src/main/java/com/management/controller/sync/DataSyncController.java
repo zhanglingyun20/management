@@ -108,8 +108,9 @@ public class DataSyncController {
 			return syncDataService.activaAccount(device);
 		} catch (Exception e) {
 			logger.error("data format error", e);
+			Result.failed("data format error");
 		}
-		return Result.failed("data format error");
+		return Result.failed("未知错误");
 	}
 	
 	

@@ -68,4 +68,12 @@ public class UserController {
 	{
 		return userService.selectById(id);
 	}
+	
+	
+	
+	@RequestMapping(value = "/getUserType")
+	public @ResponseBody Result shareholders(String userType)
+	{    
+		return userService.getUserByUserType(userType);
+	}
 }

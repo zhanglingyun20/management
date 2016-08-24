@@ -12,15 +12,35 @@
 		<result column="remark" property="remark" jdbcType="VARCHAR" />
 		<result column="site_level" property="siteLevel" jdbcType="VARCHAR" />
 		<result column="site_code" property="siteCode" jdbcType="VARCHAR" />
+		<result column="shareholders_id" property="shareholdersId" jdbcType="INTEGER" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
 	<resultMap id="voResultMap" type="com.management.model.vo.SiteVO" extends ="BaseResultMap" >
 		<result column="account" property="account" jdbcType="VARCHAR" />
 	</resultMap>
+	
+	
+	<select id="getBySiteByAccountAndSiteName" resultMap="voResultMap"
+		parameterType="com.management.model.vo.DeviceVO">
+		select
+			users.account,
+			site.*
+		from site left join users on site.user_id = users.id
+		where  1=1 
+		<if test="record.account !=null and record.account !='' ">
+			and users.account = #{record.account}
+		</if>
+		
+		<if test="record.siteName != null and record.siteName != '' ">
+			and site_name  = #{record.siteName}
+		</if>
+		
+	</select>
+	
 	<sql id="Base_Column_List">
 		id, parent_id, user_id, site_name, province, city, county,remark,site_code,site_level,
-		create_time
+		shareholders_id,create_time
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
@@ -53,13 +73,13 @@
 	</delete>
 	<insert id="insert" parameterType="com.management.model.Site" useGeneratedKeys="true" keyProperty="id">
 		insert into site (parent_id, user_id,
-		site_name, province, city,county,remark,site_level
+		site_name, province, city,county,remark,site_level,shareholders_id,
 		site_code, create_time)
 		values (
 		#{parentId},
 		#{userId},
 		#{siteName}, #{province}, #{city},
-		#{county},#{remark},#{siteLevel},
+		#{county},#{remark},#{siteLevel},#{shareholdersId},
 		#{siteCode}, #{createTime})
 	</insert>
 	<insert id="insertSelective" parameterType="com.management.model.Site" useGeneratedKeys="true" keyProperty="id">
@@ -91,6 +111,10 @@
 			</if>
 			<if test="siteLevel != null">
 				site_level,
+			</if>
+			
+			<if test="shareholdersId != null">
+				shareholders_id,
 			</if>
 			<if test="siteCode != null">
 				site_code,
@@ -127,6 +151,10 @@
 			<if test="siteLevel != null">
 				#{siteLevel,jdbcType=VARCHAR},
 			</if>
+			<if test="shareholdersId != null">
+				#{shareholdersId},
+			</if>
+			
 			<if test="siteCode != null">
 				#{siteCode,jdbcType=VARCHAR},
 			</if>

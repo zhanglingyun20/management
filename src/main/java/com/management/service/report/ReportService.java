@@ -33,6 +33,7 @@ public class ReportService
 	@Autowired
 	private DeviceMapper  deviceMapper;
 	
+	
 	public Page<DeviceReportVO> findDeviceReports(Page<DeviceReportVO> page,DeviceReportVO record)
 	{
 		List<DeviceReportVO> vos = gameRunRecordMapper.findDeviceReports(page, record);

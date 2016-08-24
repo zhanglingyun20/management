@@ -44,6 +44,8 @@ public class Site {
 	private String remark;
 	
 	private String siteLevel;
+	
+	private String shareholdersId;
 	/**
 	 * 创建时间
 	 */
@@ -154,6 +156,14 @@ public class Site {
 			return value;
 		}
 	}
+
+	public String getShareholdersId() {
+		return shareholdersId;
+	}
+	public void setShareholdersId(String shareholdersId) {
+		this.shareholdersId = shareholdersId;
+	}
+	
 	
 	
 }

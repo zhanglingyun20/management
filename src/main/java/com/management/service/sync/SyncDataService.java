@@ -137,25 +137,31 @@ public class SyncDataService {
 	}
 	
 	
-	public Result activaAccount(DeviceInfo device)
-	{
-		if (device!=null)
-		{
-			Users vidata = usersMapper.selectByAccountAndPwd(device.getAccount(), device.getPassword());
-			if(vidata!=null)
-			{
-				//绑定场地账号和设备信息
-				Device record = new Device();
-				Site site = siteMapper.selectByUserId(vidata.getId());
-				record.setSiteId(site==null?0:site.getId());
-				record.setDeviceCode(device.getDeviceCode());
-				record.setCreateTime(new Date());
-				record.setDeviceMac(device.getDeviceMac());
-				record.setDeviceName(device.getDeviceName());
-				siteDeviceMapper.insert(record);
-				return Result.success();
-			}
+	public Result activaAccount(DeviceInfo device) {
+
+		Device result = siteDeviceMapper.selectByDeviceCode(device
+				.getDeviceCode());
+		if (result != null) {
+			return Result.failed("已激活");
 		}
-		return Result.failed(messageHelperService.getUnknownAccount());
+		Users vidata = usersMapper.selectByAccountAndPwd(device.getAccount(),
+				device.getPassword());
+		if (vidata != null) {
+			
+			if (!Users.Type.SITE.getValue().equals(vidata.getUserType())) {
+				return Result.failed("未知的用户");
+			}
+			// 绑定场地账号和设备信息
+			Device record = new Device();
+			Site site = siteMapper.selectByUserId(vidata.getId());
+			record.setSiteId(site == null ? 0 : site.getId());
+			record.setDeviceCode(device.getDeviceCode());
+			record.setCreateTime(new Date());
+			record.setDeviceMac(device.getDeviceMac());
+			record.setDeviceName(device.getDeviceName());
+			siteDeviceMapper.insert(record);
+			return Result.success();
+		}
+		return Result.failed("未知的用户");
 	}
 }

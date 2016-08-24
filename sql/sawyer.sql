@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2016-08-16 01:21:33
+Date: 2016-08-21 23:38:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3564,23 +3564,25 @@ CREATE TABLE `game` (
   `game_name` varchar(50) DEFAULT NULL COMMENT '游戏名称',
   `game_version` varchar(50) DEFAULT NULL COMMENT '游戏版本',
   `game_process` varchar(100) DEFAULT NULL COMMENT '游戏进程',
+  `billing_time` int(11) DEFAULT NULL COMMENT '计费时间',
+  `default_price` double(10,0) DEFAULT NULL COMMENT '默认价格 元/次',
   `state` varchar(10) DEFAULT NULL COMMENT '游戏状态',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `game_code` (`game_code`),
   UNIQUE KEY `game_code_2` (`game_code`),
   UNIQUE KEY `game_process` (`game_process`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='游戏表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='游戏表';
 
 -- ----------------------------
 -- Records of game
 -- ----------------------------
-INSERT INTO `game` VALUES ('1', 'qq', 'qq', '1.0', 'qq.exe', 'active', '2016-08-09 18:32:04');
-INSERT INTO `game` VALUES ('2', 'eclipse', 'eclipse', '1.0', 'eclipse.exe', 'active', '2016-08-11 00:11:24');
-INSERT INTO `game` VALUES ('3', 'chrome', 'chrome', '1.0', 'chrome.exe', 'active', '2016-08-11 00:11:27');
-INSERT INTO `game` VALUES ('4', 'G_1471180009789', 'kugou', '1.0', 'kugou.exe', 'active', '2016-08-14 21:06:50');
-INSERT INTO `game` VALUES ('5', 'G_1471182420217', 'rrrr', 'rrrrrrrr', 'rrrrrr', 'active', '2016-08-14 21:47:00');
-INSERT INTO `game` VALUES ('6', 'G_1471182445340', 'ggg', 'ggggggggg', 'ggggg', 'active', '2016-08-14 21:47:25');
+INSERT INTO `game` VALUES ('1', 'qq', 'qq', '1.0', 'qq.exe', '10', '5', 'active', '2016-08-09 18:32:04');
+INSERT INTO `game` VALUES ('2', 'eclipse', 'eclipse', '1.0', 'eclipse.exe', '10', '5', 'active', '2016-08-11 00:11:24');
+INSERT INTO `game` VALUES ('3', 'chrome', 'chrome', '1.0', 'chrome.exe', '10', '5', 'active', '2016-08-11 00:11:27');
+INSERT INTO `game` VALUES ('5', 'G_1471182420217', 'rrrr', 'rrrrrrrr', 'rrrrrr', '10', '5', 'active', '2016-08-14 21:47:00');
+INSERT INTO `game` VALUES ('6', 'G_1471182445340', 'ggg', 'ggggggggg', 'ggggg', '10', '5', 'active', '2016-08-14 21:47:25');
+INSERT INTO `game` VALUES ('7', 'G_1471782528051', '测试', 'aa', 'aa', '11', '11', 'active', '2016-08-21 20:28:48');
 
 -- ----------------------------
 -- Table structure for game_price
@@ -3593,7 +3595,7 @@ CREATE TABLE `game_price` (
   `game_process` varchar(50) DEFAULT NULL COMMENT '游戏进程',
   `run_price` double(11,0) NOT NULL COMMENT '游戏运行收费单价(元/次)',
   `fixed_price` date NOT NULL COMMENT '定价日期（按照定价日期结算此日期内产生的数据）',
-  `is_use` int(11) NOT NULL COMMENT '标价是否正在使用 0正在使用 1：历史纪录',
+  `is_use` varchar(11) NOT NULL COMMENT '标价是否正在使用 0正在使用 1：历史纪录',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='游戏运行加个表';
@@ -3624,7 +3626,7 @@ CREATE TABLE `game_run_record` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建日期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='游戏运行记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='游戏运行记录表';
 
 -- ----------------------------
 -- Records of game_run_record
@@ -3658,6 +3660,19 @@ INSERT INTO `game_run_record` VALUES ('43', 'test@163.com', 'test_mac0001', 'D_1
 INSERT INTO `game_run_record` VALUES ('44', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_914975101', 'NAME_914975101', 'audiodg.exe', '2016-08-15', '3', '2016-08-15 23:58:00', '2016-08-15 23:41:09');
 INSERT INTO `game_run_record` VALUES ('45', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-1305335746', 'NAME_-1305335746', 'wifitask.exe', '2016-08-15', '1', '2016-08-15 23:45:00', '2016-08-15 23:44:16');
 INSERT INTO `game_run_record` VALUES ('46', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-1382230051', 'NAME_-1382230051', 'taskeng.exe', '2016-08-15', '1', '2016-08-15 23:47:00', '2016-08-15 23:46:07');
+INSERT INTO `game_run_record` VALUES ('47', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-1475422321', 'NAME_-1475422321', 'qqexternal.exe', '2016-08-17', '1', '2016-08-17 22:55:00', '2016-08-17 00:59:54');
+INSERT INTO `game_run_record` VALUES ('48', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-639013444', 'NAME_-639013444', 'rundll32.exe', '2016-08-17', '1', '2016-08-17 22:55:00', '2016-08-17 01:00:13');
+INSERT INTO `game_run_record` VALUES ('49', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_864651244', 'NAME_864651244', 'searchfilterhost.exe', '2016-08-17', '1', '2016-08-17 22:57:00', '2016-08-17 22:56:29');
+INSERT INTO `game_run_record` VALUES ('50', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-1475422321', 'NAME_-1475422321', 'qqexternal.exe', '2016-08-17', '1', '2016-08-17 22:59:00', '2016-08-17 22:58:59');
+INSERT INTO `game_run_record` VALUES ('51', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_864651244', 'NAME_864651244', 'searchfilterhost.exe', '2016-08-17', '1', '2016-08-17 22:59:00', '2016-08-17 22:58:59');
+INSERT INTO `game_run_record` VALUES ('52', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_1947153791', 'NAME_1947153791', 'backgroundtaskhost.exe', '2016-08-17', '1', '2016-08-17 23:00:00', '2016-08-17 22:59:05');
+INSERT INTO `game_run_record` VALUES ('53', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_1947153791', 'NAME_1947153791', 'backgroundtaskhost.exe', '2016-08-17', '1', '2016-08-17 23:00:00', '2016-08-17 22:59:34');
+INSERT INTO `game_run_record` VALUES ('54', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_864651244', 'NAME_864651244', 'searchfilterhost.exe', '2016-08-17', '1', '2016-08-17 23:02:00', '2016-08-17 23:01:29');
+INSERT INTO `game_run_record` VALUES ('55', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-1475422321', 'NAME_-1475422321', 'qqexternal.exe', '2016-08-17', '1', '2016-08-17 23:03:00', '2016-08-17 23:02:34');
+INSERT INTO `game_run_record` VALUES ('56', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_996132459', 'NAME_996132459', 'winrar.exe', '2016-08-17', '1', '2016-08-17 23:03:00', '2016-08-17 23:02:37');
+INSERT INTO `game_run_record` VALUES ('57', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_864651244', 'NAME_864651244', 'searchfilterhost.exe', '2016-08-17', '1', '2016-08-17 23:04:00', '2016-08-17 23:04:00');
+INSERT INTO `game_run_record` VALUES ('58', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_-1305335746', 'NAME_-1305335746', 'wifitask.exe', '2016-08-17', '1', '2016-08-17 23:05:00', '2016-08-17 23:04:19');
+INSERT INTO `game_run_record` VALUES ('59', 'test@163.com', 'test_mac0001', 'D_1471192124702', '深圳', 'GAME_864651244', 'NAME_864651244', 'searchfilterhost.exe', '2016-08-21', '1', '2016-08-21 20:44:03', '2016-08-17 23:06:28');
 
 -- ----------------------------
 -- Table structure for province
@@ -3725,7 +3740,7 @@ CREATE TABLE `site` (
   `site_level` varchar(50) DEFAULT NULL COMMENT '场地级别',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='场地表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='场地表';
 
 -- ----------------------------
 -- Records of site
@@ -3746,7 +3761,7 @@ CREATE TABLE `users` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `account` (`account`)
-) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of users
@@ -3754,3 +3769,5 @@ CREATE TABLE `users` (
 INSERT INTO `users` VALUES ('1', 'zly@163.com', 'sawyer', '123456', 'normal', 'system', '2016-08-06 01:58:36');
 INSERT INTO `users` VALUES ('165', 'test@163.com', '测试账号', '123456', 'normal', 'site', '2016-08-07 13:00:21');
 INSERT INTO `users` VALUES ('166', 'zly22@163.com', 'zly22', '12345622', 'normal', 'site', '2016-08-07 13:00:21');
+INSERT INTO `users` VALUES ('186', '11111', '2222', '3D2172418CE305C7D16D4B05597C6A59', 'normal', 'system', '2016-08-17 23:40:20');
+INSERT INTO `users` VALUES ('187', 'admin', 'admin', '21232F297A57A5A743894A0E4A801FC3', 'normal', 'system', '2016-08-17 23:42:36');
