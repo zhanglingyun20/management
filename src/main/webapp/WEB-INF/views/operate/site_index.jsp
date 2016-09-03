@@ -105,7 +105,7 @@
           {title:'场地名称',dataIndex:'siteName',width:'20%'},
           {title:'所属省',dataIndex:'province',width:'20%'},
           {title:'所属市',dataIndex:'city',width:'20%'},
-          {title:'所属区',dataIndex:'county',width:'20%'},
+          {title:'所属区',dataIndex:'county',width:'20%'}
 /*           {title:'已定价游戏',dataIndex:'fixPriceGameCount',width:'10%',renderer : function(value,obj){
               var str =  Search.createLink({ //链接使用 此方式
                   id : 'edit' + obj.id,
@@ -115,22 +115,22 @@
                 });
               return str;
           }}, */
-          {title:'已定价游戏',dataIndex:'fixPriceGameCount',width:'20%'},
+/*           {title:'已定价游戏',dataIndex:'fixPriceGameCount',width:'20%'},
           {title:'游戏状态',dataIndex:'state',width:'20%',
         	  renderer : function(value)
         	  {
         		  if ('active'==value) {return "正常"}
         		  if ('forbidden'==value) {return "禁用"}
           	  }
-          }
+          } */
         ],
 
         gridCfg = Search.createGridCfg(columns,{
             tbar : {
               items : [
-                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
+                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction}/* ,
                 {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
-                {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction}
+                {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction} */
               ]
             },
             plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格

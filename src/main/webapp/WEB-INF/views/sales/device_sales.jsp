@@ -15,6 +15,7 @@
 <div class="container">
     <div class="row">
         <form id="searchForm" class="form-horizontal span24">
+        	<input type="hidden" name="value" value="${account}"/>
             <div class="row">
                 <div class="control-group span8">
                     <label class="control-label">设备名称：</label>
@@ -87,6 +88,9 @@
                         direction : 'desc'
                     },
                     autoLoad : true,
+           		 	params : {
+           			 account : '${account}'
+           		   },
                     pageSize : 15,
                     proxy : {
                         method : 'post',

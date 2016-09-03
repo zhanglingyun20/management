@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.management.common.Page;
@@ -30,8 +31,10 @@ public class SalesController
 	private SaleService saleService;
 	
 	@RequestMapping(value = "/device_sales")
-	public String device()
+	public String device(@RequestParam(value="account",defaultValue="",required=false)String account,
+			Model model)
 	{    
+		model.addAttribute("account", account);
 		return "sales/device_sales";
 	}
 	
@@ -43,7 +46,7 @@ public class SalesController
 	
 	
 	@RequestMapping(value = "/device_sales_details")
-	public String deviceSalesDetails(String deviceCode,Model model)
+	public String deviceSalesDetails(@RequestParam(value="deviceCode",defaultValue="",required=false)String deviceCode,Model model)
 	{   
 		model.addAttribute("deviceCode", deviceCode);
 		return "sales/device_sales_details";
@@ -67,5 +70,13 @@ public class SalesController
 	public @ResponseBody Page<SiteVO> siteSalesList (Page<SiteVO> page,SiteVO record)
 	{
 		return saleService.getBySiteByAccountAndSiteName(page, record);
+	}
+	
+	
+	@RequestMapping(value = "/site_sales_details")
+	public String siteSalesDetails(@RequestParam(value="account",defaultValue="",required=false)String account,Model model)
+	{   
+		model.addAttribute("account", account);
+		return "sales/site_sales_details";
 	}
 }

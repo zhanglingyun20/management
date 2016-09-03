@@ -61,9 +61,9 @@
             {title:'场地销售详情',dataIndex:'sales',width:'10%',renderer : function(value,obj){
                 var str =  Search.createLink({ //链接使用 此方式
                     id : 'edit' + value,
-                    title : '设备销售详情',
-                    text : "设备销售详情",
-                    href : 'sales/device_sales_details?deviceCode='+obj.deviceCode
+                    title : '场地销售详情',
+                    text : "场地销售详情",
+                    href : 'sales/device_sales?account='+obj.account
                 });
                 return str;
             }}

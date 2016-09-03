@@ -139,10 +139,9 @@ public class SyncDataService {
 	
 	public Result activaAccount(DeviceInfo device) {
 
-		Device result = siteDeviceMapper.selectByDeviceCode(device
-				.getDeviceCode());
+		Device result = siteDeviceMapper.selectByDeviceMac(device.getDeviceMac());
 		if (result != null) {
-			return Result.failed("已激活");
+			return Result.failed("此设备已激活");
 		}
 		Users vidata = usersMapper.selectByAccountAndPwd(device.getAccount(),
 				device.getPassword());
@@ -162,6 +161,6 @@ public class SyncDataService {
 			siteDeviceMapper.insert(record);
 			return Result.success();
 		}
-		return Result.failed("未知的用户");
+		return Result.failed("服务异常");
 	}
 }

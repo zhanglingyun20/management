@@ -56,9 +56,9 @@
                   text:'销售额统计',
                   items:[
                     /* {id:'site',text:'场地统计',href:'site'}, */
-                    {id:'all_price',text:'总销售额',href:'report/all'},
+                    /* {id:'all_price',text:'总销售额',href:'report/all'},
                     {id:'province_price',text:'省份销售额',href:'report/province'},
-                    {id:'city_price',text:'城市销售额',href:'report/city'},
+                    {id:'city_price',text:'城市销售额',href:'report/city'}, */
                     {id:'site_sales',text:'场地销售额',href:'sales/site_sales'},
                     {id:'device_sales',text:'设备销售额',href:'sales/device_sales'}
 
@@ -81,8 +81,8 @@
                  text:'运营管理',
                  items:[
                    {id:'game',text:'游戏管理',href:'game/index'},
-                   {id:'site',text:'场地管理',href:'site/index'},
-                   {id:'price',text:'游戏定价',href:'game/price'},
+                   {id:'site',text:'场地管理',href:'site/index'}/* ,
+                   {id:'price',text:'游戏定价',href:'game/price'}, */
                  ]
                }]
            }, 
