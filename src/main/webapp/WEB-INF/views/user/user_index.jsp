@@ -115,7 +115,7 @@
 	            <label class="control-label"><s></s>选择股东：</label>
 	            <div class="controls">
 	             <select class="input-small"  name="shareholdersId" onchange="gradeChange()" >
-	                <option value="">请选择</option>
+	                <option value="0">请选择</option>
 	              </select>
 	            </div>
 	          </div>
@@ -188,9 +188,9 @@
         gridCfg = Search.createGridCfg(columns,{
             tbar : {
               items : [
-                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
+                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction}/* ,
                 {text : '<i class="icon-edit"></i>编辑',btnCls : 'button button-small',handler:function(){alert('编辑');}},
-                {text : '<i class="icon-remove"></i>删除',btnCls : 'button button-small',handler : delFunction}
+                {text : '<i class="icon-remove"></i>删除',btnCls : 'button button-small',handler : delFunction} */
               ]
             },
             plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格

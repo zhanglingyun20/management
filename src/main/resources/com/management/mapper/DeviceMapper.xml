@@ -17,17 +17,20 @@
 	<select id="getDevicesByNameAndCode" resultMap="deviceVOResultMap"
 		parameterType="com.management.model.vo.DeviceVO">
 		select
-		<include refid="Base_Column_List" />
-		from device
+		device.*
+		from device left join site on device.site_id = site.id left join users on users.id = site.user_id
 		where 1=1
 		<if test="record.deviceCode!=null and record.deviceCode!='' ">
-			and device_code = #{record.deviceCode}
+			and device.device_code = #{record.deviceCode}
 		</if>
 		
 		<if test="record.deviceName != null and record.deviceName != '' ">
-			and device_name  = #{record.deviceName}
+			and device.device_name  = #{record.deviceName}
 		</if>
 		
+		<if test="record.account != null and record.account != '' ">
+			and users.account  = #{record.account}
+		</if>
 	</select>
 	
 	
@@ -49,6 +52,7 @@
 		<include refid="Base_Column_List" />
 		from device
 		where device_mac = #{deviceMac,jdbcType=VARCHAR}
+		limit 1
 	</select>
 	
 	<select id="selectByDeviceCode" resultMap="BaseResultMap"
