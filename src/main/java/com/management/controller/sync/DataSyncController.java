@@ -99,7 +99,7 @@ public class DataSyncController {
 	@RequestMapping("/sync/active_account")
 	public @ResponseBody Result activeAccount(@RequestParam("token") String token,@RequestParam("data") String data)
 	{
-
+		logger.info("params={} token={}"+token+"data={}"+data);
 		if (!MD5Util.createToken().equals(token)) {
 			Result.failed(messageHelperService.getTokenInvalid());
 		}

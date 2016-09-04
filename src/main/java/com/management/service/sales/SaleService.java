@@ -47,7 +47,7 @@ public class SaleService {
 						int runCount = gameRunRecord.getRunCount();
 						double price = 0;
 						if (game!=null) {
-							price = game.getDefaultPrice();
+							price = game.getDefaultPrice()==null?0:game.getDefaultPrice();
 						}
 						double gameSales = runCount*price;
 						deviceVO.setSales(gameSales+salesCount);

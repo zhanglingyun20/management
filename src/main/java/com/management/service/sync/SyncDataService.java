@@ -158,9 +158,14 @@ public class SyncDataService {
 			record.setCreateTime(new Date());
 			record.setDeviceMac(device.getDeviceMac());
 			record.setDeviceName(device.getDeviceName());
-			siteDeviceMapper.insert(record);
+			try {
+				siteDeviceMapper.insert(record);
+			} catch (Exception e) {
+				logger.error("activaAccount 服务异常", e);
+				return Result.failed("服务异常");
+			}
 			return Result.success();
 		}
-		return Result.failed("服务异常");
+		return Result.failed("账号或密码错误");
 	}
 }
