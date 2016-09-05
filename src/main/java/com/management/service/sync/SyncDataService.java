@@ -4,26 +4,27 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.management.common.Result;
+import com.management.mapper.DeviceGameMapper;
+import com.management.mapper.DeviceMapper;
 import com.management.mapper.GameMapper;
 import com.management.mapper.GameRunRecordMapper;
-import com.management.mapper.DeviceMapper;
 import com.management.mapper.SiteMapper;
 import com.management.mapper.UsersMapper;
+import com.management.model.Device;
 import com.management.model.DeviceInfo;
 import com.management.model.Game;
 import com.management.model.GameRunRecord;
 import com.management.model.Site;
-import com.management.model.Device;
 import com.management.model.Users;
 import com.management.service.common.GameRecordVO;
 import com.management.service.common.GameRunRecordRequest;
 import com.management.service.common.MessageHelperService;
+import com.management.service.operate.DeviceGameService;
 
 /**
  * 
@@ -62,6 +63,10 @@ public class SyncDataService {
 	
 	@Autowired
 	private SiteMapper siteMapper;
+	
+	
+	@Autowired
+	private DeviceGameService deviceGameService;
 
 	/**
 	 * 
@@ -75,13 +80,17 @@ public class SyncDataService {
 	 * @createDate 2016年8月6日
 	 *
 	 */
-	public Result syncGameRunData(GameRunRecordRequest gameRunRecordRequest)
-	{
+	public Result syncGameRunData(GameRunRecordRequest gameRunRecordRequest) {
 		if (gameRunRecordRequest != null) {
 			List<GameRecordVO> recordVOs = gameRunRecordRequest.getRecord();
-			if (recordVOs == null || recordVOs.isEmpty()) { return Result.success(); }
-			Users user = usersMapper.selectByAccount(gameRunRecordRequest.getAccount());
-			if (user == null) { return Result.failed(messageHelperService.getUnknownAccount()); }
+			if (recordVOs == null || recordVOs.isEmpty()) {
+				return Result.success();
+			}
+			Users user = usersMapper.selectByAccount(gameRunRecordRequest
+					.getAccount());
+			if (user == null) {
+				return Result.failed(messageHelperService.getUnknownAccount());
+			}
 			batchCreateGameRecord(bulidGameRunrecord(gameRunRecordRequest));
 		}
 		return Result.success();
@@ -102,6 +111,8 @@ public class SyncDataService {
 //					gameRunRecordMapper.updateRunCountUnique(oldRecord);
 //				}
 				gameRunRecordMapper.insert(gameRunRecord);
+				//自动关联设备游戏   
+				deviceGameService.createDeviceGame(gameRunRecord.getDeviceCode(), gameRunRecord.getGameCode());
 			}
 		}
 		return 1;

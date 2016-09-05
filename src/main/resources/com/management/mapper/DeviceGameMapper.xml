@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.mapper.DeviceGameMapper">
+	<resultMap id="BaseResultMap" type="com.management.model.DeviceGame">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="device_id" property="deviceId"  />
+		<result column="device_code" property="deviceCode"  />
+		<result column="game_id" property="gameId"  />
+		<result column="game_code" property="gameCode"  />
+		<result column="state" property="state"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	
+	<resultMap id="deviceGameVOMap" type="com.management.model.vo.DeviceGameVO" extends="BaseResultMap">
+		<result column="user_name" property="userName"  />
+		<result column="device_name" property="deviceName"  />
+		<result column="site_name" property="siteName"  />
+		<result column="game_name" property="gameName"  />
+		<result column="account" property="account"  />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, device_id, device_code,game_id,game_code,state,create_time
+	</sql>
+	
+	<select id="findDeviceGameById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from device_game
+		where id = #{id}
+	</select>
+	
+	<insert id="insertDeviceGame" parameterType="com.management.model.DeviceGame">
+		insert into device_game (id, device_id, device_code,
+		game_id, game_code,state,create_time)
+		values (#{id}, #{deviceId},
+		#{deviceCode},
+		#{gameId},#{gameCode},#{state},
+		#{createTime})
+	</insert>
+	
+	<select id="findNormalDeviceGameByDeviceCodeAndGameCode" resultType="com.management.model.DeviceGame"
+		parameterType="String">
+		select * from  device_game where 
+		device_code = ${deviceCode} and game_code and #{gameCode} 
+		and state = 'normal' limit 1
+	</select>
+	
+	
+	<update id="updateStateByDeviceCodeAndGameCode"  parameterType="String" >
+		update device_game set state = #{state} where 
+		device_code = ${deviceCode} and game_code and #{gameCode} 
+	</update>
+	
+	
+	<select id="findDeviceGameList" resultMap="deviceGameVOMap"
+		parameterType="com.management.model.vo.DeviceGameVO">
+		select device_game.* ,
+			   site.site_name,
+			   device.device_name,
+			   game.game_name
+			from  device_game 
+			left join device on device_game.device_id=device.id
+			left join game on device_game.game_code = game.game_code
+			left join site on site.id = device.site_id
+		where 1=1 
+		<if test="record.userId !=null and record.userId !='' ">
+			and site.user_id = trim(#{record.userId})
+		</if>
+		<if test="record.siteName !=null and record.siteName !='' ">
+			and site.site_name like  CONCAT('%',trim(#{record.siteName}),'%')
+		</if>
+		<if test="record.deviceName !=null and record.deviceName !='' ">
+			and device.device_name like  CONCAT('%',trim(#{record.deviceName}),'%')
+		</if>
+		<if test="record.gameName !=null and record.gameName !='' ">
+			and game.game_name like  CONCAT('%',trim(#{record.gameName}),'%')
+		</if>
+		<if test="record.siteName !=null and record.siteName !='' ">
+			and site.site_name like  CONCAT('%',trim(#{record.siteName}),'%')
+		</if>
+		order by id desc			
+	</select>
+	
+	
+</mapper>
