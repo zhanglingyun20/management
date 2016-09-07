@@ -1,15 +1,14 @@
 package com.management.model.vo;
 
-import com.management.model.SiteBill;
 
-public class SiteBillVO extends SiteBill {
-
-	private String queryDate;
-	private String siteName;
+public class SiteSaleVO  {
 
 	private Double salesAmount;
+	private String queryDate;
+	private String account;
+	private String siteName;
 	private Double billAmount;
-	
+	private String reportTime;
 	
 	public Double getSalesAmount() {
 		return salesAmount;
@@ -17,14 +16,6 @@ public class SiteBillVO extends SiteBill {
 
 	public void setSalesAmount(Double salesAmount) {
 		this.salesAmount = salesAmount;
-	}
-
-	public Double getBillAmount() {
-		return billAmount;
-	}
-
-	public void setBillAmount(Double billAmount) {
-		this.billAmount = billAmount;
 	}
 
 	public String getQueryDate() {
@@ -35,6 +26,14 @@ public class SiteBillVO extends SiteBill {
 		this.queryDate = queryDate;
 	}
 
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
 	public String getSiteName() {
 		return siteName;
 	}
@@ -42,6 +41,21 @@ public class SiteBillVO extends SiteBill {
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
 	}
-	
-	
+
+	public Double getBillAmount() {
+		return billAmount;
+	}
+
+	public void setBillAmount(Double billAmount) {
+		this.billAmount = billAmount;
+	}
+
+	public String getReportTime() {
+		return reportTime;
+	}
+
+	public void setReportTime(String reportTime) {
+		this.reportTime = reportTime;
+	}
+
 }

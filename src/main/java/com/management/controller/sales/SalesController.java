@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.management.common.Page;
 import com.management.model.vo.DeviceVO;
 import com.management.model.vo.GameVO;
+import com.management.model.vo.SiteSaleVO;
 import com.management.model.vo.SiteVO;
 import com.management.service.report.ReportService;
 import com.management.service.sales.SaleService;
@@ -79,4 +80,20 @@ public class SalesController
 		model.addAttribute("account", account);
 		return "sales/site_sales_details";
 	}
+	
+	
+	
+	@RequestMapping(value = "/compare_bill")
+	public String compareBill(
+			Model model)
+	{    
+		return "sales/compare_bill";
+	}
+	
+	@RequestMapping(value = "/compare_bill_list")
+	public @ResponseBody Page<SiteSaleVO> compareBillList (Page<SiteSaleVO> page,SiteSaleVO siteSaleVO)
+	{
+		return saleService.getSitetGameSalesAmountByAccountAndReportDate(page, siteSaleVO);
+	}
+	
 }

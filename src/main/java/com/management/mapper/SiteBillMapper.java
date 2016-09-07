@@ -16,4 +16,7 @@ public interface SiteBillMapper {
 	List<SiteBillVO> findSiteBillList(Page<SiteBillVO> page,@Param("record")SiteBillVO record);
 	
 	int updateRemark(@Param("id")String id,@Param("remark")String remark);
+	
+	Double findBillAmountByAccountAndDate(@Param("queryDate")String queryDate,@Param("account")String account);
+	
 }

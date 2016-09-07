@@ -61,8 +61,8 @@
                     {id:'province_price',text:'省份销售额',href:'report/province'},
                     {id:'city_price',text:'城市销售额',href:'report/city'}, */
                     {id:'site_sales',text:'场地销售额',href:'sales/site_sales'},
-                    {id:'device_sales',text:'设备销售额',href:'sales/device_sales'}
-
+                    {id:'device_sales',text:'设备销售额',href:'sales/device_sales'},
+                    {id:'compare_bill',text:'账单对比',href:'sales/compare_bill'},
                   ]
                 }, 
                 {
@@ -73,13 +73,6 @@
 		                    *  3这是
 		                    * */
 		                    {id:'report_game',text:'游戏运行统计',href:'report/report_game'},
-		
-		                ]
-		         },
-                {
-	                text:'结算',
-		                items:[
-		                    {id:'compare_bill',text:'账单对比',href:'bill/compare_bill'},
 		
 		                ]
 		         }

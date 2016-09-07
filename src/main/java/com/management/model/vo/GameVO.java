@@ -7,7 +7,7 @@ public class GameVO extends Game{
 	/**
 	 * 销售额
 	 */
-	private Double sales;
+	private Double salesAmount;
 	
 	private String deviceCode;
 	
@@ -33,13 +33,6 @@ public class GameVO extends Game{
 		this.runCount = runCount;
 	}
 
-	public Double getSales() {
-		return sales;
-	}
-
-	public void setSales(Double sales) {
-		this.sales = sales;
-	}
 
 	public String getDeviceCode() {
 		return deviceCode;
@@ -47,6 +40,14 @@ public class GameVO extends Game{
 
 	public void setDeviceCode(String deviceCode) {
 		this.deviceCode = deviceCode;
+	}
+
+	public Double getSalesAmount() {
+		return salesAmount;
+	}
+
+	public void setSalesAmount(Double salesAmount) {
+		this.salesAmount = salesAmount;
 	}
 	
 	

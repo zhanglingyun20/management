@@ -15,6 +15,7 @@ import com.management.common.Page;
 import com.management.common.Result;
 import com.management.common.util.DateUtils;
 import com.management.mapper.SiteBillMapper;
+import com.management.model.GameRunRecord;
 import com.management.model.SiteBill;
 import com.management.model.vo.SiteBillVO;
 
@@ -28,16 +29,14 @@ public class SiteBillService {
 
 	private static Logger logger = Logger.getLogger(SiteBillService.class);
 	
-	
 	@Autowired
 	private SiteBillMapper siteBillMapper;
 	
-	
 	public Page<SiteBillVO> findSiteBillList(Page<SiteBillVO> page,SiteBillVO siteBillVO)
 	{
-		if (StringUtils.isEmpty(siteBillVO.getQueryDate())) {
-			siteBillVO.setQueryDate(DateUtils.formatDate(new Date(),"yyyy-MM-dd"));
-		}
+//		if (StringUtils.isEmpty(siteBillVO.getQueryDate())) {
+//			siteBillVO.setQueryDate(DateUtils.formatDate(new Date(),"yyyy-MM-dd"));
+//		}
 		List<SiteBillVO> vos = siteBillMapper.findSiteBillList(page, siteBillVO);
 		return page.bulid(vos);
 	}

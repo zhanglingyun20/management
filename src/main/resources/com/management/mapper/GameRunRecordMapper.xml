@@ -24,6 +24,15 @@
 		<result column="game_code" property="gameCode" />
 		<result column="run_count" property="runCount" />
 	</resultMap>
+	
+	<resultMap type="com.management.model.vo.SiteSaleVO" id="SitetGameSalesMap" >
+		<result column="sales_amount" property="salesAmount" />
+		<result column="report_time" property="reportTime" />
+		<result column="account" property="account" />
+		<result column="site_name" property="siteName" />
+		<result column="bill_amount" property="billAmount" />
+	</resultMap>
+	
 	<sql id="Base_Column_List">
 		id, account, device_mac, device_code, device_name,
 		game_code, game_name,game_process
@@ -197,5 +206,39 @@
 		GROUP BY game_code
 		order by run_count desc
 	</select>
+	
+	
+	<select id="getSitetGameSalesAmountByAccountAndReportDate" resultMap="SitetGameSalesMap" >
+		SELECT * FROM (
+			SELECT  sales.account,site.site_name, sales.report_time,SUM(sales_amount) sales_amount FROM  
+			(
+					SELECT gr.*,IFNULL(game.default_price,0) default_price , 
+								(IFNULL(game.default_price,0) *gr.run_count) sales_amount  
+					FROM 
+					(
+							SELECT
+								account,
+								device_code,
+								game_code,
+								report_time,
+								SUM(run_count) run_count
+							FROM
+								game_run_record
+							GROUP BY account,game_code 
+					) gr LEFT JOIN game ON game.game_code = gr.game_code 
+			) sales 
+			  LEFT JOIN users ON users.account = sales.account 
+			  LEFT JOIN site ON site.user_id = users.id
+			  GROUP BY sales.account ,sales.report_time
+			 ) t_result 
+		WHERE 1=1 
+		<if test="record.siteName !=null and record.siteName !='' ">
+			and  t_result.site_name  = trim(#{record.siteName})
+		</if>
+		<if test="record.queryDate !=null and record.queryDate !='' ">
+			and  t_result.report_time  = trim(#{record.queryDate})
+		</if>
+	</select>
+
 
 </mapper>
