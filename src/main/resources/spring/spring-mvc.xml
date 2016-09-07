@@ -23,6 +23,7 @@
 			<mvc:mapping path="/game/**" />
 			<mvc:mapping path="/site/**" />
 			<mvc:mapping path="/report/**" />
+			<mvc:mapping path="/operate/**" />
 			<bean class="com.management.controller.common.UserInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

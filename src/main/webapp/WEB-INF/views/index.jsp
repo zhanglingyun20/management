@@ -52,7 +52,8 @@
           },
           {
               id:'report',
-              menu:[{
+              menu:[
+                {
                   text:'销售额统计',
                   items:[
                     /* {id:'site',text:'场地统计',href:'site'}, */
@@ -63,17 +64,26 @@
                     {id:'device_sales',text:'设备销售额',href:'sales/device_sales'}
 
                   ]
-                }, {
-                text:'运行统计',
-                items:[
-                    /* 1可以根据省城市场地和设备对游戏运行情况进行统计，以便人工来对账
-                    *  2二级菜单为 游戏运行细节，具体多少次，每次的运行时长
-                    *  3这是
-                    * */
-                    {id:'report_game',text:'游戏运行统计',href:'report/report_game'},
-
-                ]
-            }]
+                }, 
+                {
+	                text:'运行统计',
+		                items:[
+		                    /* 1可以根据省城市场地和设备对游戏运行情况进行统计，以便人工来对账
+		                    *  2二级菜单为 游戏运行细节，具体多少次，每次的运行时长
+		                    *  3这是
+		                    * */
+		                    {id:'report_game',text:'游戏运行统计',href:'report/report_game'},
+		
+		                ]
+		         },
+                {
+	                text:'结算',
+		                items:[
+		                    {id:'compare_bill',text:'账单对比',href:'bill/compare_bill'},
+		
+		                ]
+		         }
+              ]
             },
          {
              id:'operate',
@@ -81,8 +91,10 @@
                  text:'运营管理',
                  items:[
                    {id:'game',text:'游戏管理',href:'game/index'},
-                   {id:'site',text:'场地管理',href:'site/index'}/* ,
-                   {id:'price',text:'游戏定价',href:'game/price'}, */
+                   {id:'site',text:'场地管理',href:'site/index'},
+                   {id:'bill',text:'记账',href:'bill/index'}
+                   /* {id:'device_game',text:'设备游戏管理',href:'device_game/index'} */
+                   /* {id:'price',text:'游戏定价',href:'game/price'}, */
                  ]
                }]
            }, 

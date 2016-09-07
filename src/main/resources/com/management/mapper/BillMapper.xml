@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.mapper.BillMapper">
+	<resultMap id="BaseResultMap" type="com.management.model.Bill">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="device_game_id" property="deviceGameId"  />
+		<result column="amount" property="amount"  />
+		<result column="user_id" property="userId"  />
+		<result column="user_name" property="userName"  />
+		<result column="remark" property="remark"  />
+		<result column="bill_date" property="billDate"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, device_game_id, amount,user_id,user_name,remark,bill_date,create_time
+	</sql>
+	
+	<resultMap id="billVOMap" type="com.management.model.vo.BillVO" extends="BaseResultMap">
+		<result column="game_name" property="gameName"  />
+		<result column="game_code" property="gameCode"  />
+		<result column="device_code" property="deviceCode"  />
+	</resultMap>
+	
+	<select id="findBillById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from bills
+		where id = #{id}
+	</select>
+	
+	<insert id="insertBill" parameterType="com.management.model.Bill">
+		insert into bill (device_game_id, 
+		amount, user_id, user_name,remark,bill_date,create_time)
+		values (#{deviceGameId},
+		#{amount},
+		#{userId}, #{userName}, #{remark},#{billDate},
+		#{createTime})
+	</insert>
+	
+	
+	<select id="findBillList" resultMap="billVOMap"
+		parameterType="com.management.model.vo.BillVO">
+		select bill.* ,
+			   game.game_code,
+			   game.game_name,
+			   device_game.device_code
+			from  bill 
+			left join device_game on bill.device_game_id=device_game.id
+			left join game on game.game_code= device_game.game_code
+		where device_game_id = #{record.deviceGameId} 
+		<if test="record.gameName !=null and record.gameName !='' ">
+			and game.game_name like  CONCAT('%',trim(#{record.gameName}),'%')
+		</if>
+		<if test="record.startTime !=null and record.startTime !='' ">
+			<![CDATA[ and bill.bill_date >=#{record.startTime} ]]>
+		</if>
+		<if test="record.endTime !=null and record.endTime !='' ">
+			<![CDATA[ and bill.bill_date <= #{record.endTime} ]]>
+		</if>
+		order by id desc			
+	</select>
+</mapper>
