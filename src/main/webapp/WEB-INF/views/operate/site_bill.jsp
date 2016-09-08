@@ -121,18 +121,35 @@
 		          	  }
 			    },
 			    {title : '备注',dataIndex : 'remark',width : '25%'},
-			    {title : '修改备注',
-			    	renderer : function() {
-					return '<span class="grid-command update-remark">修改备注</span>';
-				
-			    	}
-			    },
+		         <% 
+		         	String userType = (String)session.getAttribute("userType");
+		        	if(userType.equals("site")) 
+		        	{
+		        %>
+				    {title : '修改备注',
+				    	renderer : function() {
+						return '<span class="grid-command update-remark">修改备注</span>';
+					
+				    	}
+				    }
+		        <% 
+		        	}
+		        %>
+
 		],
 
 		gridCfg = Search.createGridCfg(columns, {
 			tbar : {
 				items : [ 
-				         {text : '<i class="icon-plus"></i>记账',btnCls : 'button button-small',handler:addFunction}
+				         <% 
+				        	if(userType.equals("site")) 
+				        	{
+				        %>
+				        	{text : '<i class="icon-plus"></i>记账',btnCls : 'button button-small',handler:addFunction}
+				        <% 
+				        	}
+				        %>
+				         
 				        ]
 			},
 			plugins : [ editing, BUI.Grid.Plugins.CheckSelection,

@@ -60,7 +60,9 @@ public class LoginController {
 		if (user != null) {
 			Result result = userService.sign(user);
 			if (Result.Code.SUCCESS.getValue().equals(result.getCode())) {
-				session.setAttribute("user", (Users)result.getContent());
+				Users users = (Users)result.getContent();
+				session.setAttribute("user", users);
+				session.setAttribute("userType", users.getUserType());
 				return "redirect:/";
 			}
 			model.addAttribute("result", result);
@@ -73,6 +75,7 @@ public class LoginController {
 	{
 		if (user != null) {
 			session.removeAttribute("user");
+			session.removeAttribute("userType");
 		}
 		return "redirect:/";
 	}
