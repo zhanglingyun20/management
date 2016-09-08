@@ -6,6 +6,7 @@ public class SiteBill {
 	private Integer id;
 
 	private Integer userId;
+	private String account;
 	private String remark;
 	private Double amount;
 	private Date createTime;
@@ -46,11 +47,33 @@ public class SiteBill {
 	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
 	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
 	@Override
 	public String toString() {
-		return "SiteBill [id=" + id + ", userId=" + userId + ", remark="
-				+ remark + ", amount=" + amount + ", createTime=" + createTime
-				+ ", billDate=" + billDate + "]";
+		return "SiteBill [id=" + id + ", userId=" + userId + ", account="
+				+ account + ", remark=" + remark + ", amount=" + amount
+				+ ", createTime=" + createTime + ", billDate=" + billDate + "]";
 	}
+	public SiteBill() {
+		super();
+	}
+	public SiteBill(Integer id, Integer userId, String account, String remark,
+			Double amount, Date createTime, Date billDate) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.account = account;
+		this.remark = remark;
+		this.amount = amount;
+		this.createTime = createTime;
+		this.billDate = billDate;
+	}
+
+	
 	
 }

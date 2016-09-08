@@ -158,6 +158,17 @@ html,body {
 
 <script>
 	function login() {
+		doSubmit();
+	}
+	
+	$(document).keypress(function(e) {
+		// 回车键事件  
+		if (e.which == 13) {
+			doSubmit();
+		}
+	});
+	
+	function doSubmit(){
 		$.ajax({
 			url : 'check_sign',
 			dataType : 'json',

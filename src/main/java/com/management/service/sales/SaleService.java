@@ -1,22 +1,29 @@
 package com.management.service.sales;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.management.common.Page;
+import com.management.common.util.DateUtils;
+import com.management.mapper.BillMapper;
 import com.management.mapper.DeviceMapper;
 import com.management.mapper.GameMapper;
 import com.management.mapper.GameRunRecordMapper;
+import com.management.mapper.SiteBillMapper;
 import com.management.mapper.SiteMapper;
 import com.management.model.Game;
 import com.management.model.GameRunRecord;
 import com.management.model.vo.DeviceVO;
 import com.management.model.vo.GameVO;
+import com.management.model.vo.SiteBillVO;
+import com.management.model.vo.SiteSaleVO;
 import com.management.model.vo.SiteVO;
 
 @Service
@@ -34,6 +41,11 @@ public class SaleService {
 	@Autowired
 	private GameRunRecordMapper  gameRunRecordMapper;
 	
+	@Autowired
+	private SiteBillMapper  siteBillMapper;
+	
+	
+	
 	public Page<DeviceVO> getDeviceSales(Page<DeviceVO> page,@Param("record")DeviceVO record){
 		List<DeviceVO> deviceList = deviceMapper.getDevicesByNameAndCode(page, record);
 		if (deviceList!=null&&!deviceList.isEmpty()) {
@@ -42,7 +54,7 @@ public class SaleService {
 				if (recordList!=null&&!recordList.isEmpty()) {
 					for (GameRunRecord gameRunRecord : recordList) 
 					{
-						double salesCount = deviceVO.getSales()==null?0:deviceVO.getSales();
+						double salesCount = deviceVO.getSalesAmount()==null?0:deviceVO.getSalesAmount();
 						Game game = gameMapper.selectByGameCode(gameRunRecord.getGameCode());
 						int runCount = gameRunRecord.getRunCount();
 						double price = 0;
@@ -50,7 +62,7 @@ public class SaleService {
 							price = game.getDefaultPrice()==null?0:game.getDefaultPrice();
 						}
 						double gameSales = runCount*price;
-						deviceVO.setSales(gameSales+salesCount);
+						deviceVO.setSalesAmount(gameSales+salesCount);
 					}
 				}
 			}
@@ -62,7 +74,7 @@ public class SaleService {
 		List<GameVO> gameRecordList = gameRunRecordMapper.getDeviceGamesRunCountByPage(page, record);
 		if (gameRecordList!=null&&!gameRecordList.isEmpty()) {
 			for (GameVO gameVO : gameRecordList) {
-				double salesCount = gameVO.getSales()==null?0:gameVO.getSales();
+				double salesCount = gameVO.getSalesAmount()==null?0:gameVO.getSalesAmount();
 				Game game = gameMapper.selectByGameCode(gameVO.getGameCode());
 				if (game==null) {
 					continue;
@@ -73,7 +85,7 @@ public class SaleService {
 					price = game.getDefaultPrice();
 				}
 				double gameSales = runCount*price;
-				gameVO.setSales(gameSales+salesCount);
+				gameVO.setSalesAmount(gameSales+salesCount);
 				gameVO.setPrice(null==game.getDefaultPrice()?0d:game.getDefaultPrice());
 				gameVO.setGameName(game.getGameName());
 				
@@ -95,9 +107,9 @@ public class SaleService {
 				if (recordList!=null&&!recordList.isEmpty()) {
 					Map<String,Double>  siteSaleMap = setSiteSales(recordList);
 					if (siteSaleMap.containsKey(account)) {
-						siteVO.setSales(siteSaleMap.get(account)==null?0d:siteSaleMap.get(account));
+						siteVO.setSalesAmount(siteSaleMap.get(account)==null?0d:siteSaleMap.get(account));
 					}else{
-						siteVO.setSales(0d);
+						siteVO.setSalesAmount(0d);
 					}
 					
 				}
@@ -150,5 +162,20 @@ public class SaleService {
 		}
 		double price = game.getDefaultPrice()==null?0:game.getDefaultPrice();
 		return  runCount*price;
+	}
+	
+	
+	public Page<SiteSaleVO> getSitetGameSalesAmountByAccountAndReportDate(Page<SiteSaleVO> page,SiteSaleVO siteGameSaleVO ){
+		if (StringUtils.isEmpty(siteGameSaleVO.getQueryDate())) {
+			siteGameSaleVO.setQueryDate(DateUtils.formatDate(new Date(),"yyyy-MM-dd"));
+		}
+		List<SiteSaleVO> list= gameRunRecordMapper.getSitetGameSalesAmountByAccountAndReportDate(page, siteGameSaleVO);
+		if (list!=null&&!list.isEmpty()) {
+			for (SiteSaleVO model : list) {
+				Double billAmount = siteBillMapper.findBillAmountByAccountAndDate(siteGameSaleVO.getQueryDate(), model.getAccount());
+				model.setBillAmount(billAmount==null?0:billAmount);
+			}
+		}
+		return page.bulid(list);
 	}
 }

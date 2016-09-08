@@ -57,6 +57,7 @@ public class SiteBillController {
 		Users user = (Users) session.getAttribute("user");
 		if (user!=null) {
 			siteBill.setUserId(user.getId());
+			siteBill.setAccount(user.getAccount());
 		}else
 		{
 			Result.failed("请登录");

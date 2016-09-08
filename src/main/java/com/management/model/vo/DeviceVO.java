@@ -7,7 +7,7 @@ public class DeviceVO extends Device{
 	/**
 	 * 销售额
 	 */
-	private Double sales;
+	private Double salesAmount;
 	
 	private String account;
 	
@@ -21,13 +21,13 @@ public class DeviceVO extends Device{
 		this.account = account;
 	}
 
-	public Double getSales() {
-		return sales;
+	public Double getSalesAmount() {
+		return salesAmount;
 	}
 
-	public void setSales(Double sales) {
-		this.sales = sales;
+	public void setSalesAmount(Double salesAmount) {
+		this.salesAmount = salesAmount;
 	}
-	
+
 	
 }

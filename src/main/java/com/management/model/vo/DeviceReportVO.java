@@ -16,7 +16,7 @@ public class DeviceReportVO extends GameRunRecord {
 	/**
 	 * 销售额
 	 */
-	private Double sales;
+	private Double salesAmount;
 	
 	/**
 	 * 单价
@@ -72,12 +72,12 @@ public class DeviceReportVO extends GameRunRecord {
 		this.gameName = gameName;
 	}
 
-	public Double getSales() {
-		return sales;
+	public Double getSalesAmount() {
+		return salesAmount;
 	}
 
-	public void setSales(Double sales) {
-		this.sales = sales;
+	public void setSalesAmount(Double salesAmount) {
+		this.salesAmount = salesAmount;
 	}
 
 	public Double getPrice() {

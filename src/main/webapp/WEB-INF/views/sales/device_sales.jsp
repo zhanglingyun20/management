@@ -58,8 +58,8 @@
         columns = [
             {title:'设备编号',dataIndex:'deviceCode',width:'10%'},
             {title:'设备名称',dataIndex:'deviceName',width:'10%'},
-            {title:'总销售额(元)',dataIndex:'sales',width:'20%'},
-            {title:'设备销售详情',dataIndex:'sales',width:'10%',renderer : function(value,obj){
+            {title:'总销售额(元)',dataIndex:'salesAmount',width:'20%'},
+            {title:'设备销售详情',dataIndex:'salesAmount',width:'10%',renderer : function(value,obj){
                 var str =  Search.createLink({ //链接使用 此方式
                     id : 'edit' + value,
                     title : '设备销售详情',

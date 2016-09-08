@@ -5,16 +5,18 @@
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="amount" property="amount"  />
 		<result column="user_id" property="userId"  />
+		<result column="account" property="account"  />
 		<result column="remark" property="remark"  />
 		<result column="bill_date" property="billDate"  />
 		<result column="create_time" property="createTime"  />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, amount,user_id,remark,bill_date,create_time
+		id, amount,user_id,account,remark,bill_date,create_time
 	</sql>
 	
 	<resultMap id="siteBillVOMap" type="com.management.model.vo.SiteBillVO" extends="BaseResultMap">
 		<result column="site_name" property="siteName"  />
+		<result column="bill_amount" property="billAmount"  />
 	</resultMap>
 	
 	<select id="findSiteBillById" resultMap="BaseResultMap"
@@ -27,10 +29,10 @@
 	
 	<insert id="insertSiteBill" parameterType="com.management.model.Bill">
 		insert into site_bill ( 
-		amount, user_id, remark,bill_date,create_time)
+		amount, user_id, account,remark,bill_date,create_time)
 		values (
 		#{amount},
-		#{userId}, #{remark},#{billDate},
+		#{userId}, #{account},#{remark},#{billDate},
 		#{createTime})
 	</insert>
 	
@@ -40,12 +42,15 @@
 		select site_bill.*,
 				site.site_name
 			from  site_bill left join site on site_bill.user_id = site.user_id
-		where date(bill_date) = #{record.queryDate}
+		where 1=1
 		<if test="record.userId !=null and record.userId !='' ">
 			and site_bill.user_id = trim(#{record.userId})
 		</if>
 		<if test="record.siteName !=null and record.siteName !='' ">
 			and site.site_name like  CONCAT('%',trim(#{record.siteName}),'%')
+		</if>
+		<if test="record.queryDate !=null and record.queryDate !='' ">
+			and date(bill_date) = #{record.queryDate}
 		</if>
 		order by id desc			
 	</select>
@@ -54,4 +59,16 @@
 		update site_bill set remark = #{remark} where 
 		id = #{id}
 	</update>
+	
+	
+	<select id="findBillAmountByAccountAndDate" resultType="java.lang.Double"
+		parameterType="java.lang.String">
+		SELECT
+			SUM(site_bill.amount) bill_amount
+		FROM
+			site_bill
+		  WHERE DATE(bill_date) = #{queryDate}
+		  AND account = #{account}
+		GROUP BY  site_bill.account
+	</select>
 </mapper>

@@ -291,7 +291,6 @@
 				} 
 			}
 		});
-	  console.info(aa)
   });
   
   function showSite(){

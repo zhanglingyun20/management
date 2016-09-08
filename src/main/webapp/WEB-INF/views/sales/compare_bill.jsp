@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>设备数据统计</title>
+    <title>账单对比</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="${pageContext.request.contextPath}/assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
     <link href="${pageContext.request.contextPath}/assets/css/bui-min.css" rel="stylesheet" type="text/css" />
@@ -17,20 +17,20 @@
         <form id="searchForm" class="form-horizontal span24">
             <div class="row">
                 <div class="control-group span8">
-                    <label class="control-label">场地账号：</label>
-                    <div class="controls">
-                        <input type="text" class="control-text" name="account">
-                    </div>
-                </div>
-                <div class="control-group span8">
                     <label class="control-label">场地名称：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="siteName">
                     </div>
                 </div>
-             <div class="span3 offset5">
-                    <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
+               <div class="control-group span8">
+                    <label class="control-label">对账日期：</label>
+                    <div class="controls">
+                        <input type="text" class=" calendar" name="queryDate">
+                    </div>
                 </div>
+	          	 <div class="span3 offset5">
+	                    <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
+	              </div>
             </div>
     </div>
     </form>
@@ -57,7 +57,9 @@
         columns = [
             {title:'场地账号',dataIndex:'account',width:'10%'},
             {title:'场地名称',dataIndex:'siteName',width:'10%'},
+            {title:'对账日期',dataIndex:'reportTime',width:'10%'},
             {title:'总销售额(元)',dataIndex:'salesAmount',width:'20%'},
+            {title:'记账总额',dataIndex:'billAmount',width:'20%'},
             {title:'场地销售详情',dataIndex:'salesAmount',width:'10%',renderer : function(value,obj){
                 var str =  Search.createLink({ //链接使用 此方式
                     id : 'edit' + value,
@@ -80,7 +82,7 @@
                     /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
                 });
 
-        store = Search.createStore('site_sales_list',
+        store = Search.createStore('compare_bill_list',
                 {
                     sortInfo : {
                         field : 'salesAmount',

@@ -8,6 +8,7 @@ import com.management.common.Page;
 import com.management.model.GameRunRecord;
 import com.management.model.vo.DeviceReportVO;
 import com.management.model.vo.GameVO;
+import com.management.model.vo.SiteSaleVO;
 
 public interface GameRunRecordMapper {
 
@@ -30,4 +31,6 @@ public interface GameRunRecordMapper {
 	List<GameRunRecord> getDeviceGamesRunCount(@Param("deviceCode")String deviceCode);
 	
 	List<GameRunRecord> getSiteDeviceGamesRunCountByAccount(@Param("account")String account);
+	
+	List<SiteSaleVO> getSitetGameSalesAmountByAccountAndReportDate(Page<SiteSaleVO> page,@Param("record") SiteSaleVO record );
 }

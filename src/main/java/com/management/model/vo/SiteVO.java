@@ -12,15 +12,8 @@ public class SiteVO extends Site{
 	/**
 	 * 销售额
 	 */
-	private Double sales;
+	private Double salesAmount;
 
-	public Double getSales() {
-		return sales;
-	}
-
-	public void setSales(Double sales) {
-		this.sales = sales;
-	}
 
 	public String getAccount() {
 		return account;
@@ -36,6 +29,14 @@ public class SiteVO extends Site{
 
 	public void setFixPriceGameCount(Integer fixPriceGameCount) {
 		this.fixPriceGameCount = fixPriceGameCount;
+	}
+
+	public Double getSalesAmount() {
+		return salesAmount;
+	}
+
+	public void setSalesAmount(Double salesAmount) {
+		this.salesAmount = salesAmount;
 	}
 
 	
