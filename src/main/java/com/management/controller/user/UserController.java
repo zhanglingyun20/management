@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.management.common.Page;
@@ -53,6 +54,22 @@ public class UserController {
 			logger.error("add user error{}", e);
 		}
 		return Result.failed("保存失败");
+	}
+	
+	@RequestMapping(value = "/change_pwd")
+	public @ResponseBody Result changePwd(
+			@RequestParam(value="account",defaultValue="",required=false)String account,
+			@RequestParam(value="password",defaultValue="",required=false)String password,
+			@RequestParam(value="newPwd",defaultValue="",required=false)String newPwd,
+			@RequestParam(value="newPwdConfirm",defaultValue="",required=false)String newPwdConfirm)
+	{
+		
+		try {
+			return userService.changePwd(account, password, newPwd, newPwdConfirm);
+		} catch (Exception e) {
+			logger.error("changePwd error{}", e);
+		}
+		return Result.failed("服务异常");
 	}
 	
 	@RequestMapping(value = "/user/edit/{id}")

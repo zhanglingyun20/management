@@ -140,7 +140,7 @@
 				state = #{state,jdbcType=VARCHAR},
 			</if>
 			<if test="userType != null">
-				userType = #{userType,jdbcType=VARCHAR},
+				user_type = #{userType,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -165,7 +165,7 @@
 				create_time = #{createTime,jdbcType=TIMESTAMP},
 			</if>
 		</set>
-		where account = #{id,jdbcType=VARCHAR}
+		where account = #{account,jdbcType=VARCHAR}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.management.model.Users">
 		update users

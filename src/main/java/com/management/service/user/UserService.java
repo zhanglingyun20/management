@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import com.management.mapper.UsersMapper;
 import com.management.model.Site;
 import com.management.model.Users;
 import com.management.service.common.MessageHelperService;
+import com.management.service.operate.DeviceGameService;
 
 /**
  * 
@@ -35,6 +37,7 @@ import com.management.service.common.MessageHelperService;
 @Service
 public class UserService {
 
+	private static Logger logger = Logger.getLogger(UserService.class);
 	@Autowired
 	private UsersMapper usersMapper;
 	
@@ -71,6 +74,27 @@ public class UserService {
 			return Result.success();
 		}
 		return Result.failed("参数有误");
+	}
+	
+	public Result changePwd(String account,String password,String newPwd,String newPwdConfirm){
+		Users user = usersMapper.selectByAccountAndPwd(account, MD5Util.MD5(password));
+		if (user==null) {
+			return Result.failed("原始密码输入有误");
+		}
+		if (StringUtils.isEmpty(newPwd)||StringUtils.isEmpty(newPwdConfirm)) {
+			return Result.failed("请输入新密码");
+		}
+		if (!newPwd.equals(newPwdConfirm)) {
+			return Result.failed("两次输入密码不一致");
+		}
+		user.setPassword(MD5Util.MD5(newPwd));
+		try {
+			usersMapper.updateByPrimaryKeySelective(user);
+		} catch (Exception e) {
+			logger.error("changePwd error{}", e);
+			Result.failed("服务异常");
+		}
+		return Result.success();
 	}
 	
 	@Transactional

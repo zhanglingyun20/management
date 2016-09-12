@@ -226,7 +226,7 @@
 			and users.account like  CONCAT('%',trim(#{users.account}),'%')
 		</if>
 		<if test="site.siteName !=null  and site.siteName!='' ">
-			and site.site_name like  CONCAT('%',trim(#{sile.siteName}),'%')
+			and site.site_name like  CONCAT('%',trim(#{site.siteName}),'%')
 		</if>
 		<if test="site.province !=null  and site.province!='' ">
 			and site.province =  trim(#{site.province})

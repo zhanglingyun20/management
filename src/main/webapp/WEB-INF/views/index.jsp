@@ -10,7 +10,44 @@
    <link href="${pageContext.request.contextPath}/assets/css/main-min.css" rel="stylesheet" type="text/css" />
  </head>
  <body>
-
+<div id="content" class="hide">
+  	  <label class="control-label" id="error_message"><s></s></label>
+      <form id="J_Form" class="form-horizontal" action="user/change_pwd">
+       <input type="hidden" name="id" id ="J_id">
+        <div class="row">
+          <div class="control-group span8">
+            <label class="control-label"><s>*</s>账号：</label>
+            <div class="controls">
+              <input name="account" id="account" type="text" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control-group span8">
+            <label class="control-label"><s>*</s>原始密码：</label>
+            <div class="controls">
+              <input name="password" id="password" type="password" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="control-group span8">
+            <label class="control-label"><s>*</s>新密码：</label>
+            <div class="controls">
+              <input name="newPwd" id="newPwd"  type="password" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>
+        </div>
+       <div class="row">
+          <div class="control-group span8">
+            <label class="control-label"><s>*</s>重复新密码：</label>
+            <div class="controls">
+              <input name ="newPwdConfirm" id="newPwd_confirm"  type="password" data-rules="{required:true}" class="input-normal control-text">
+            </div>
+          </div>
+        </div>       
+      </form>
+    </div>
   <div class="header">
       <div class="dl-title">
         <a href="http://www.twisin.com/" title="文档库地址" target="_blank"><!-- 仅仅为了提供文档的快速入口，项目中请删除链接 -->
@@ -18,7 +55,7 @@
         </a>
       </div>
 
-    <div class="dl-log">欢迎您	<span class="dl-log-user">${user.account}</span><a href="sign_out" title="退出系统" class="dl-log-quit">[退出]</a><a href="http://www.twisin.com/" title="" class="dl-log-quit">VR金锐战队</a>
+    <div class="dl-log"><span  ><a href="javascript:void(0)" class="dl-log-quit" id="change_pwd">修改密码</a></span> 欢迎您	<span class="dl-log-user">${user.account}</span><a href="sign_out" title="退出系统" class="dl-log-quit">[退出]</a><a href="http://www.twisin.com/" title="" class="dl-log-quit">VR金锐战队</a>
     </div>
   </div>
    <div class="content">
@@ -159,6 +196,40 @@
         modulesConfig : config
       });
     });
+    
+    BUI.use('bui/overlay',function(Overlay){
+	  	var dialog = new Overlay.Dialog({
+		      title:'修改密码',
+		      contentId:'content',
+		      success:function () {
+		    	form && form.submit();
+		        /* this.close(); */
+		        return false;
+		      }
+		});
+	  	
+		var Overlay = BUI.Overlay,
+		Form = BUI.Form;
+		var form = new Form.HForm({
+		  srcNode : '#J_Form',
+	      submitType : 'ajax',
+	      callback : function(data){
+	        if(data.code=='success'){
+	        	 dialog.close();
+	        	 window.location.href='sign_out';
+	        }else
+	        {
+	        	BUI.Message.Alert(data.message);
+	        	return false;
+	        }
+	      }
+		}).render();
+		
+        $('#change_pwd').on('click',function () {
+            dialog.show();
+        });
+    });
+
   </script>
  </body>
 </html>
