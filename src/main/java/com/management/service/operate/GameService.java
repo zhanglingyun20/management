@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -30,17 +31,36 @@ public class GameService {
 	}
 	
 	public Result addGame(Game game){
-		if (game==null||StringUtils.isEmpty(game.getGameProcess())||StringUtils.isEmpty(game.getGameName())) {
+		if (Objects.isNull(game.getId())) {
+			if (game==null||StringUtils.isEmpty(game.getGameProcess())||StringUtils.isEmpty(game.getGameName())) {
+				logger.info("资料不完整");
+				return Result.failed("资料不完整");
+			}
+			if (gameMapper.selectByGameProcess(game.getGameProcess())!=null) {
+				return Result.failed("该游戏进程已存在");
+			}
+			game.setGameCode(DataUtils.generateGameCode());
+			game.setCreateTime(new Date());
+			game.setState(Game.State.ACTIVE.getValue());
+			gameMapper.insertSelective(game);
+		}else{
+			return updateGame(game);
+		}
+		return Result.success();
+	}
+	
+	public Result updateGame(Game game) {
+		if (game == null || StringUtils.isEmpty(game.getGameProcess())
+				|| StringUtils.isEmpty(game.getGameName())) {
 			logger.info("资料不完整");
 			return Result.failed("资料不完整");
 		}
-		if (gameMapper.selectByGameProcess(game.getGameProcess())!=null) {
+		Game oldGame = gameMapper.selectByPrimaryKey(game.getId());
+		if (gameMapper.selectByGameProcess(game.getGameProcess()) != null
+				&&!game.getGameProcess().equals(oldGame.getGameProcess())) {
 			return Result.failed("该游戏进程已存在");
 		}
-		game.setGameCode(DataUtils.generateGameCode());
-		game.setCreateTime(new Date());
-		game.setState(Game.State.ACTIVE.getValue());
-		gameMapper.insertSelective(game);
+		gameMapper.updateByPrimaryKeySelective(game);
 		return Result.success();
 	}
 	

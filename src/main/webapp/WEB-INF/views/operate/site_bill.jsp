@@ -66,7 +66,7 @@
           <div class="control-group span8">
             <label class="control-label"><s>*</s>记账金额：</label>
             <div class="controls">
-               <input type="text" class="control-text" name="amountStr"  data-rules="{number:true}">
+               <input type="text" class="control-text" name="amountStr"  data-rules="{number:true}">元
             </div>
           </div>
         </div>
@@ -197,62 +197,62 @@
 		function updateRemark() {
 			update_dialog.show();
 		}
-
-	});
-
-	var Overlay = BUI.Overlay, Form = BUI.Form;
-	var form = new Form.HForm({
-		srcNode : '#J_Form',
-		submitType : 'ajax',
-		callback : function(data) {
-			if (data.code == 'success') {
-				dialog.close();
-				search.load();
-			} else {
-				$("span[id='error_messge']").val(data.messge);
-				BUI.Message.Alert(data.message);
+		
+		var Overlay = BUI.Overlay, Form = BUI.Form;
+		var form = new Form.HForm({
+			srcNode : '#J_Form',
+			submitType : 'ajax',
+			callback : function(data) {
+				if (data.code == 'success') {
+					dialog.close();
+					search.load();
+				} else {
+					$("span[id='error_messge']").val(data.messge);
+					BUI.Message.Alert(data.message);
+					return false;
+				}
+			}
+		}).render();
+		
+		var dialog = new Overlay.Dialog({
+			title : '记账',
+			contentId : 'content',
+			success : function() {
+				form && form.submit();
+				/* this.close(); */
 				return false;
 			}
-		}
-	}).render();
-	
-	var dialog = new Overlay.Dialog({
-		title : '记账',
-		contentId : 'content',
-		success : function() {
-			form && form.submit();
-			/* this.close(); */
-			return false;
-		}
-	});
-	
-	
-	var update_dialog = new Overlay.Dialog({
-		title : '修改备注',
-		contentId : 'update_remark',
-		success : function() {
-			form_update && form_update.submit();
-			/* this.close(); */
-			return false;
-		}
-	});
-	
-	
-	var Overlay = BUI.Overlay, Form = BUI.Form;
-	var form_update = new Form.HForm({
-		srcNode : '#J_Form_update',
-		submitType : 'ajax',
-		callback : function(data) {
-			if (data.code == 'success') {
-				update_dialog.close();
-				search.load();
-			} else {
-				$("span[id='error_messge']").val(data.messge);
-				BUI.Message.Alert(data.message);
+		});
+		
+		
+		var update_dialog = new Overlay.Dialog({
+			title : '修改备注',
+			contentId : 'update_remark',
+			success : function() {
+				form_update && form_update.submit();
+				/* this.close(); */
 				return false;
 			}
-		}
-	}).render();
+		});
+		
+		
+		var Overlay = BUI.Overlay, Form = BUI.Form;
+		var form_update = new Form.HForm({
+			srcNode : '#J_Form_update',
+			submitType : 'ajax',
+			callback : function(data) {
+				if (data.code == 'success') {
+					update_dialog.close();
+					search.load();
+				} else {
+					$("span[id='error_messge']").val(data.messge);
+					BUI.Message.Alert(data.message);
+					return false;
+				}
+			}
+		}).render();
+	});
+
 </script>
 </body>
 </html>  

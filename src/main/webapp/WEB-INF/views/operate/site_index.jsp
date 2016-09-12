@@ -128,7 +128,7 @@
         gridCfg = Search.createGridCfg(columns,{
             tbar : {
               items : [
-                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction}/* ,
+                /*{text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction} ,
                 {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
                 {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction} */
               ]

@@ -29,7 +29,6 @@
             </div>
           </div>
         </div>
-<%----%>
         <div class="row">
           <div class="control-group span8">
             <label class="control-label">状态：</label>
@@ -62,11 +61,12 @@
   <div id="content" class="hide">
   	  <label class="control-label" id="error_message"><s></s></label>
       <form id="J_Form" class="form-horizontal" action="add">
+       <input type="hidden" name="id" id ="J_id">
         <div class="row">
           <div class="control-group span8">
             <label class="control-label"><s>*</s>游戏名称：</label>
             <div class="controls">
-              <input name="gameName" type="text" data-rules="{required:true}" class="input-normal control-text">
+              <input name="gameName" id="gameName" type="text" data-rules="{required:true}" class="input-normal control-text">
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@
           <div class="control-group span8">
             <label class="control-label"><s>*</s>游戏进程：</label>
             <div class="controls">
-              <input name="gameProcess" type="text" data-rules="{required:true}" class="input-normal control-text">
+              <input name="gameProcess" id="gameProcess" type="text" data-rules="{required:true}" class="input-normal control-text">
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
           <div class="control-group span8">
             <label class="control-label"><s>*</s>游戏版本：</label>
             <div class="controls">
-              <input name="gameVersion" type="text" data-rules="{required:true}" class="input-normal control-text">
+              <input name="gameVersion" id="gameVersion"  type="text" data-rules="{required:true}" class="input-normal control-text">
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@
 	        <div class="control-group span8">
 	        	  <label class="control-label">计费时长(分钟)：</label>
 	          <div class="controls">
-	            <input type="text" class="control-text" name="billingTime"  data-rules="{number:true}">
+	            <input type="text" class="control-text" name="billingTime"  id="billingTime" data-rules="{number:true}">
 	          </div>
 			</div>
         </div>
@@ -103,14 +103,10 @@
           <div class="control-group span8">
             <label class="control-label">游戏价格(元/次)：</label>
             <div class="controls">
-              <input type="text" class="control-text" name="defaultPrice"  data-rules="{number:true}">
+              <input type="text" class="control-text"  id="defaultPrice" name="defaultPrice"  data-rules="{number:true}">
           </div>
         </div>
         </div>
-        
-
-
-        
       </form>
     </div>
   <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-1.8.1.min.js"></script>
@@ -141,15 +137,21 @@
         		  if ('active'==value) {return "正常"}
         		  if ('forbidden'==value) {return "禁用"}
           	  }
-          }
+          },
+		  {title : '修改',
+		    	renderer : function() {
+				return '<span class="grid-command update">修改</span>';
+			
+		    	}
+		  }
         ],
 
         gridCfg = Search.createGridCfg(columns,{
             tbar : {
               items : [
-                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction}
-                /* {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
-                {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction} */
+                {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
+                {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
+                {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction}
               ]
             },
             plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格
@@ -202,10 +204,10 @@
             type : 'post',
             data : {"ids" : ids.join(","),"state":state},
             success : function(data){
-              if(data.success){ //删除成功
+              if(data.code=='success'){ //删除成功
                 search.load();
-              }else{ //删除失败
-                BUI.Message.Alert('删除失败！');
+              }else{ 
+                BUI.Message.Alert('操作失败！');
               }
             }
         });
@@ -222,8 +224,6 @@
       }
     });
     
-  });
-  
 	var Overlay = BUI.Overlay,
 	Form = BUI.Form;
 	var form = new Form.HForm({
@@ -243,14 +243,30 @@
 	}).render();
 	
 	var dialog = new Overlay.Dialog({
-	      title:'新增用户',
+	      title:'新增游戏',
 	      contentId:'content',
 	      success:function () {
 	    	form && form.submit();
 	        /* this.close(); */
 	        return false;
 	      }
-	    });
+	   });
+	
+	grid.on('cellclick', function(ev) {
+		var record = ev.record, //点击行的记录
+		field = ev.field, //点击对应列的dataIndex
+		target = $(ev.domTarget); //点击的元素
+		if (target.hasClass('update')) {
+			$("#gameName").val(record.gameName);
+			$("#gameProcess").val(record.gameProcess);
+			$("#gameVersion").val(record.gameVersion);
+			$("#billingTime").val(record.billingTime);
+			$("#defaultPrice").val(record.defaultPrice);
+			$("#J_id").val(record.id);
+			dialog.show();
+		}
+	});
+  });
 </script>
 </body>
 </html>  

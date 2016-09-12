@@ -258,76 +258,76 @@
       }
     });
     
-  });
-  
-  $(function(){
-	  $("select[name='userType']").change(function(){
-		  var $_type = $(this).val();
-		  if('site'==$_type){
-			  showSite();
-		  }else{
-			  removeSite();
-		  }
-	  });
-	  
-	  
-	  var user_select = $("select[name='shareholdersId']");
-		$.ajax({
-			url : 'getUserType',
-			dataType : 'json',
-			type : 'post',
-			data : {
-				"userType" : "shareholders"
-			},
-			success : function(data) {
-				if (data.code=='success') 
-				{ 
-					var userList = data.content;
-					for (var i = 0; i < userList.length; i++) 
-					{
-						var obj = userList[i];
-						user_select.append("<option value='"+obj.id+"'>"+obj.username+"</option>");
-					}
-				} 
-			}
-		});
-  });
-  
-  function showSite(){
-	  $("div[id='site_div']").show();
-  }
-  
-  function removeSite(){
-	  $("div[id='site_div']").hide();
-  }
-  
-	var Overlay = BUI.Overlay,
-	Form = BUI.Form;
-	var form = new Form.HForm({
-	  srcNode : '#J_Form',
-      submitType : 'ajax',
-      callback : function(data){
-        if(data.code=='success'){
-        	 dialog.close();
-        	 window.location.reload();
-        }else
-        {
-        	$("span[id='error_messge']").val(data.messge);
-        	BUI.Message.Alert(data.message);
-        	 return false;
+    $(function(){
+  	  $("select[name='userType']").change(function(){
+  		  var $_type = $(this).val();
+  		  if('site'==$_type){
+  			  showSite();
+  		  }else{
+  			  removeSite();
+  		  }
+  	  });
+  	  
+  	  
+  	  var user_select = $("select[name='shareholdersId']");
+  		$.ajax({
+  			url : 'getUserType',
+  			dataType : 'json',
+  			type : 'post',
+  			data : {
+  				"userType" : "shareholders"
+  			},
+  			success : function(data) {
+  				if (data.code=='success') 
+  				{ 
+  					var userList = data.content;
+  					for (var i = 0; i < userList.length; i++) 
+  					{
+  						var obj = userList[i];
+  						user_select.append("<option value='"+obj.id+"'>"+obj.username+"</option>");
+  					}
+  				} 
+  			}
+  		});
+    });
+    
+    function showSite(){
+  	  $("div[id='site_div']").show();
+    }
+    
+    function removeSite(){
+  	  $("div[id='site_div']").hide();
+    }
+    
+  	var Overlay = BUI.Overlay,
+  	Form = BUI.Form;
+  	var form = new Form.HForm({
+  	  srcNode : '#J_Form',
+        submitType : 'ajax',
+        callback : function(data){
+          if(data.code=='success'){
+          	 dialog.close();
+          	 search.load();
+          }else
+          {
+          	$("span[id='error_messge']").val(data.messge);
+          	BUI.Message.Alert(data.message);
+          	 return false;
+          }
         }
-      }
-	}).render();
-	
-	var dialog = new Overlay.Dialog({
-	      title:'新增用户',
-	      contentId:'content',
-	      success:function () {
-	    	form && form.submit();
-	        /* this.close(); */
-	        return false;
-	      }
-	    });
+  	}).render();
+  	
+  	var dialog = new Overlay.Dialog({
+  	      title:'新增用户',
+  	      contentId:'content',
+  	      success:function () {
+  	    	form && form.submit();
+  	        /* this.close(); */
+  	        return false;
+  	      }
+  	    });
+  });
+  
 </script>
 </body>
 </html>  
