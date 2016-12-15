@@ -45,13 +45,14 @@ public class LoginController {
 	@RequestMapping(value = "/check_sign")
 	public @ResponseBody Result checkSign(Users user, HttpSession session)
 	{
+		Result result = null;
 		if (user != null) {
-			Result result = userService.sign(user);
+			result = userService.sign(user);
 			if (Result.Code.SUCCESS.getValue().equals(result.getCode())) {
 				return  result;
 			}
 		}
-		return Result.failed("账号密码错误");
+		return result;
 	}
 
 	@RequestMapping(value = "/login")

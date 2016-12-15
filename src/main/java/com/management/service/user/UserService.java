@@ -1,6 +1,8 @@
 package com.management.service.user;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,8 +19,8 @@ import com.management.mapper.SiteMapper;
 import com.management.mapper.UsersMapper;
 import com.management.model.Site;
 import com.management.model.Users;
+import com.management.model.vo.UserTypeSelect;
 import com.management.service.common.MessageHelperService;
-import com.management.service.operate.DeviceGameService;
 
 /**
  * 
@@ -67,9 +69,9 @@ public class UserService {
 				}
 				site.setSiteCode(DataUtils.generateSiteCode());
 				site.setCreateTime(new Date());
-				site.setParentId(0);
 				site.setUserId(user.getId());
-				siteMapper.insertSelective(site);
+				site.setParentId(0);
+				siteMapper.insert(site);
 			}
 			return Result.success();
 		}
@@ -162,8 +164,42 @@ public class UserService {
 	}
 	
 	
-	public Result getUserByUserType(String userType){
+	public List<UserTypeSelect> getUserByUserType(String userType){
 		
-		return Result.success().addObject(usersMapper.getUserByUserType(userType));
+//		return Result.success().addObject(usersMapper.getUserByUserType(userType));
+		return usersMapper.getUserByUserType(userType);
+	}
+
+	public Result updateUserStateByIds(String state, String idsStr)
+	{
+		List<Integer> ids = spilitIds(idsStr);
+		if (ids == null || ids.isEmpty())
+		{
+			return Result.failed("未选中数据");
+		}
+		try
+		{
+			usersMapper.updateUserStateByIds(state, ids);
+		}
+		catch (Exception e)
+		{
+			logger.error("updateUserStateByIds", e);
+			Result.failed("操作异常");
+		}
+		return Result.success();
+	}
+	
+	private List<Integer> spilitIds(String idsStr){
+		if (StringUtils.isEmpty(idsStr))
+		{
+			return null;
+		}
+		 List<Integer> ids = new ArrayList<>();
+		String arr [] = idsStr.split(",");
+		for (String id : arr)
+		{
+			ids.add(Integer.valueOf(id));
+		}
+		return ids;
 	}
 }
