@@ -1,5 +1,7 @@
 package com.management.controller.user;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import com.management.common.Page;
 import com.management.common.Result;
 import com.management.model.Site;
 import com.management.model.Users;
+import com.management.model.vo.UserTypeSelect;
 import com.management.service.user.UserService;
 
 /**
@@ -72,7 +75,7 @@ public class UserController {
 		return Result.failed("服务异常");
 	}
 	
-	@RequestMapping(value = "/user/edit/{id}")
+	@RequestMapping(value = "/edit/{id}")
 	public String edit(@PathVariable("id")Integer id,Model model)
 	{
 		Users user = userService.selectById(id);
@@ -80,16 +83,25 @@ public class UserController {
 		return "user/edit";
 	}
 	
-	@RequestMapping(value = "/user/dialog/{id}")
-	public @ResponseBody Users dialog(@PathVariable("id")Integer id,Model model)
+	
+	
+	@RequestMapping(value = "/dialog/{id}")
+	public @ResponseBody Users dialog(@PathVariable("id")Integer id)
 	{
 		return userService.selectById(id);
 	}
 	
 	
+	@RequestMapping(value = "/opt/{state}")
+	public @ResponseBody Result forbidden(@RequestParam(value="ids",defaultValue="",required=false)String ids,
+			@PathVariable("state")String state)
+	{
+		return userService.updateUserStateByIds(state, ids);
+	}
+	
 	
 	@RequestMapping(value = "/getUserType")
-	public @ResponseBody Result shareholders(String userType)
+	public @ResponseBody List<UserTypeSelect> shareholders(String userType)
 	{    
 		return userService.getUserByUserType(userType);
 	}

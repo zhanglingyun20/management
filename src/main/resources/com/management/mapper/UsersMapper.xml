@@ -10,6 +10,13 @@
 		<result column="user_type" property="userType" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
+	
+	
+	<resultMap id="UserTypeMap" type="com.management.model.vo.UserTypeSelect">
+		<result column="value" property="value" />
+		<result column="username" property="text" />
+	</resultMap>
+	
 	<sql id="Base_Column_List">
 		id, account, username, password, state, user_type,create_time
 	</sql>
@@ -182,11 +189,22 @@
 	
 	
 	
-	<select id="getUserByUserType" resultMap="BaseResultMap"
+	<select id="getUserByUserType" resultMap="UserTypeMap"
 		parameterType="java.lang.String">
 		select
-		<include refid="Base_Column_List" />
+			id value,username text
 		from users
 		where user_type = #{userType}
 	</select>
+	
+	
+	<update id="updateUserStateByIds" >
+		update users
+		set state = #{state}
+		where id in
+		<foreach item="item" index="index" collection="ids" open="("  
+            separator="," close=")">  
+            #{item}  
+        </foreach> 
+	</update>
 </mapper>

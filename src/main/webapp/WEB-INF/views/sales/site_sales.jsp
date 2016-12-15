@@ -28,6 +28,18 @@
                         <input type="text" class="control-text" name="siteName">
                     </div>
                 </div>
+		          <div class="control-group span8">
+		            <label class="control-label">开始日期：</label>
+		            <div class="controls">
+		            	 <input type="text" class=" calendar" name="startDate">
+		             </div>
+		          </div>
+		         <div class="control-group span8">
+		           <label class="control-label">结束日期：</label>
+		            <div class="controls">
+		            	 <input type="text" class=" calendar" name="endDate">
+		             </div>
+		          </div>
              <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>

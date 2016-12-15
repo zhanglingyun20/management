@@ -5,9 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.management.common.Page;
-import com.management.model.Game;
 import com.management.model.Site;
-import com.management.model.vo.DeviceVO;
 import com.management.model.vo.SiteVO;
 
 public interface SiteMapper {

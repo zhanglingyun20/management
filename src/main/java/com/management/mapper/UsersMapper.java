@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.management.common.Page;
 import com.management.model.Users;
+import com.management.model.vo.UserTypeSelect;
 
 public interface UsersMapper {
 
@@ -29,5 +30,7 @@ public interface UsersMapper {
     
     List<Users> findUsersByAccountAndUsername(Page<Users> page,@Param("user")Users user);
     
-    List<Users> getUserByUserType(@Param("userType") String userType);
+    List<UserTypeSelect> getUserByUserType(@Param("userType") String userType);
+    
+    int updateUserStateByIds(@Param("state") String state,@Param("ids")List<Integer> ids);
 }
