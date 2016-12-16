@@ -1,5 +1,6 @@
 package com.management.controller.sales;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.management.common.Page;
+import com.management.common.Result;
+import com.management.common.util.DateUtils;
+import com.management.model.FinanceStatistical;
 import com.management.model.vo.DeviceVO;
 import com.management.model.vo.GameVO;
 import com.management.model.vo.SiteSaleVO;
 import com.management.model.vo.SiteVO;
-import com.management.service.report.ReportService;
+import com.management.service.operate.FinanceStatisticalService;
 import com.management.service.sales.SaleService;
 
 /**
@@ -25,11 +29,12 @@ import com.management.service.sales.SaleService;
 public class SalesController
 {
 
-	@Autowired
-	private ReportService reportService;
 	
 	@Autowired
 	private SaleService saleService;
+	
+	@Autowired
+	private FinanceStatisticalService financeStatisticalService;
 	
 	@RequestMapping(value = "/device_sales")
 	public String device(@RequestParam(value="account",defaultValue="",required=false)String account,
@@ -94,6 +99,23 @@ public class SalesController
 	public @ResponseBody Page<SiteSaleVO> compareBillList (Page<SiteSaleVO> page,SiteSaleVO siteSaleVO)
 	{
 		return saleService.getSitetGameSalesAmountByAccountAndReportDate(page, siteSaleVO);
+	}
+	
+	
+	@RequestMapping(value = "/comfirm_fanance")
+	public @ResponseBody Result comfirmFanance (FinanceStatistical financeStatistical,
+			@RequestParam(value="reportTime",defaultValue="",required=false)String reportTime)
+	{
+		if (financeStatisticalService.getFinanceStatisticalByUserAndDate(reportTime, financeStatistical.getUserId())!=null)
+		{
+			return Result.failed("该记录已确认！");
+		}
+		
+		if (StringUtils.isNoneBlank(reportTime))
+		{
+			financeStatistical.setBillDate(DateUtils.parseDate(reportTime));
+		}
+		return financeStatisticalService.creatFinanceStatistical(financeStatistical);
 	}
 	
 }

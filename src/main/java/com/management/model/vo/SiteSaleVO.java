@@ -9,6 +9,7 @@ public class SiteSaleVO  {
 	private String siteName;
 	private Double billAmount;
 	private String reportTime;
+	private Integer userId;
 	
 	public Double getSalesAmount() {
 		return salesAmount;
@@ -57,5 +58,17 @@ public class SiteSaleVO  {
 	public void setReportTime(String reportTime) {
 		this.reportTime = reportTime;
 	}
+
+	public Integer getUserId()
+	{
+		return userId;
+	}
+
+	public void setUserId(Integer userId)
+	{
+		this.userId = userId;
+	}
+	
+	
 
 }

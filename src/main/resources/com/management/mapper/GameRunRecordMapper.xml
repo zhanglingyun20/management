@@ -31,6 +31,7 @@
 		<result column="account" property="account" />
 		<result column="site_name" property="siteName" />
 		<result column="bill_amount" property="billAmount" />
+		<result column="user_id" property="userId" />
 	</resultMap>
 	
 	<sql id="Base_Column_List">
@@ -210,7 +211,7 @@
 	
 	<select id="getSitetGameSalesAmountByAccountAndReportDate" resultMap="SitetGameSalesMap" >
 		SELECT * FROM (
-			SELECT  sales.account,site.site_name, sales.report_time,SUM(sales_amount) sales_amount FROM  
+			SELECT  sales.account,site.site_name, sales.report_time,SUM(sales_amount) sales_amount,users.id user_id FROM  
 			(
 					SELECT gr.*,IFNULL(game.default_price,0) default_price , 
 								(IFNULL(game.default_price,0) *gr.run_count) sales_amount  

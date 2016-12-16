@@ -299,9 +299,11 @@
 								ids : ids_str
 							},
 							success : function(data) {
+								alert(1);
 								if (data.code=='success') { //删除成功
 									search.load();
 								} else { //删除失败
+									alert(2)
 									BUI.Message.Alert(data.message);
 								}
 							}
