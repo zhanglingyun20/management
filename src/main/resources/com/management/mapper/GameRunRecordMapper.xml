@@ -242,4 +242,32 @@
 	</select>
 
 
+
+	<select id="getSiteSalesAmountByAccountAndDate" resultMap="SitetGameSalesMap" >
+		SELECT * FROM (
+			SELECT  sales.account,site.site_name, sales.report_time,SUM(sales_amount) sales_amount,users.id user_id FROM  
+			(
+					SELECT gr.*,IFNULL(game.default_price,0) default_price , 
+								(IFNULL(game.default_price,0) *gr.run_count) sales_amount  
+					FROM 
+					(
+							SELECT
+								account,
+								device_code,
+								game_code,
+								report_time,
+								SUM(run_count) run_count
+							FROM
+								game_run_record
+							GROUP BY account,game_code 
+					) gr LEFT JOIN game ON game.game_code = gr.game_code 
+			) sales 
+			  LEFT JOIN users ON users.account = sales.account 
+			  LEFT JOIN site ON site.user_id = users.id
+			  GROUP BY sales.account ,sales.report_time
+			 ) t_result 
+		WHERE  t_result.report_time  = trim(#{date})
+	</select>
+
+
 </mapper>

@@ -62,9 +62,9 @@
             {title:'记账总额',dataIndex:'billAmount',width:'20%'},
             {title : '操作',dataIndex : 'd',width:200,renderer : function (value,obj) {
             	if(obj.salesAmount!=obj.billAmount){
-            		return '<span class="grid-command btn1" >确认账务</span>';
+            		return '<span class="grid-command btn1" style="color:#F00" >确认账务</span>';
             	}
-                return '<span class="grid-command btn1" style="color:#F00" >确认账务</span>';
+                return '--';
             }},
             {title:'场地销售详情',dataIndex:'salesAmount',width:'10%',renderer : function(value,obj){
                 var str =  Search.createLink({ //链接使用 此方式

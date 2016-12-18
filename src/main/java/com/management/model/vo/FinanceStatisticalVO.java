@@ -1,8 +1,8 @@
 package com.management.model.vo;
 
-import com.management.model.SiteBill;
+import com.management.model.FinanceStatistical;
 
-public class FinanceStatisticalVO extends SiteBill {
+public class FinanceStatisticalVO extends FinanceStatistical {
 
 	private String queryDate;
 	private String siteName;

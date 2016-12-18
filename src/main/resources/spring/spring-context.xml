@@ -3,17 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans    
        http://www.springframework.org/schema/beans/spring-beans.xsd    
        http://www.springframework.org/schema/tx    
-       http://www.springframework.org/schema/tx/spring-tx.xsd    
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/task
+         http://www.springframework.org/schema/task/spring-task.xsd   
        http://www.springframework.org/schema/aop    
        http://www.springframework.org/schema/aop/spring-aop.xsd    
        http://www.springframework.org/schema/context    
        http://www.springframework.org/schema/context/spring-context.xsd">
-	<!-- 扫包过滤掉controller  不然事务会失效-->
-	<context:component-scan base-package="com.management" >
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />  
+	<!-- 扫包过滤掉controller 不然事务会失效 -->
+
+	<task:annotation-driven />
+	<context:component-scan base-package="com.management">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -27,8 +33,8 @@
 	</bean>
 	<!-- 引入jdbc配置文件 -->
 	<context:property-placeholder location="classpath:config/jdbc.properties" />
-	<!-- <util:properties id="message"
-		location="classpath:config/message.properties" /> -->
+	<!-- <util:properties id="message" location="classpath:config/message.properties" 
+		/> -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="username" value="${jdbc.username}"></property>
 		<property name="password" value="${jdbc.password}"></property>
@@ -48,13 +54,13 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 配置sql映射文件所在位置 注意：默认与mapper类位置相同 -->
 		<property name="mapperLocations" value="classpath:com/management/mapper/**/*.xml" />
-		<!----> 		    
+		<!---->
 		<property name="plugins">
 			<bean class="com.management.common.PageInterceptor">
 				<!-- 设置分页拦截器数据库类型 -->
 				<property name="databaseType" value="mysql"></property>
 			</bean>
-		</property> 
+		</property>
 	</bean>
 
 	<!-- 配置事务管理器，全注解声明式事务 -->

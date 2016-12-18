@@ -18,7 +18,9 @@ public interface FinanceStatisticalMapper {
 	
 	Double findBillAmountByAccountAndDate(@Param("queryDate")String queryDate,@Param("account")String account);
 	
-	
 	FinanceStatistical getFinanceStatisticalByUserAndDate(@Param("billDate")String billDate,@Param("userId")Integer userId);
+	
+	
+	List<FinanceStatisticalVO> findFinanceStatisticalAll();
 	
 }

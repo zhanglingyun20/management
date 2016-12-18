@@ -55,6 +55,14 @@
 		order by id desc			
 	</select>
 	
+	
+	<select id="findFinanceStatisticalAll" resultMap="FinanceStatisticalVOMap">
+		select finance_statistical.*,
+				site.site_name
+			from  finance_statistical left join site on finance_statistical.user_id = site.user_id
+		order by id desc			
+	</select>
+	
 	<update id="updateRemark"  parameterType="java.lang.String" >
 		update finance_statistical set remark = #{remark} where 
 		id = #{id}
