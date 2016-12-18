@@ -167,7 +167,8 @@
                     <% 
                     	}
                     %>
-                   {id:'bill',text:'记账',href:'bill/index'}
+                   {id:'bill',text:'记账',href:'bill/index'},
+                   {id:'finance',text:'财务统计',href:'finance/index'}
                    /* {id:'device_game',text:'设备游戏管理',href:'device_game/index'} */
                    /* {id:'price',text:'游戏定价',href:'game/price'}, */
                  ]

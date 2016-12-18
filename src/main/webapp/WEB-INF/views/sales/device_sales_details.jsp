@@ -30,7 +30,7 @@
                 </div>
                 </br>
                 <div class="control-group span8">
-                    <label class="control-label">日期：</label>
+                    <label class="control-label">统计日期：</label>
                     <div class="controls">
                         <input type="text" class=" calendar" name="reportTime">
                     </div>

@@ -157,6 +157,9 @@ html,body {
 </body>
 
 <script>
+if(window !=top){  
+    top.location.href=location.href;  
+}  
 	function login() {
 		doSubmit();
 	}

@@ -27,18 +27,13 @@
                         <input type="text" class="control-text" name="deviceName">
                     </div>
                 </div>
-                <div class="control-group span8">
-                    <label class="control-label">开始日期：</label>
-                    <div class="controls">
-                        <input type="text" class="calendar" name="startDate">
-                    </div>
+            <div class="control-group span10">
+                <label class="control-label">起始日期：</label>
+                <div class="controls bui-form-group" data-rules="{dateRange : true}">
+                    <input name="startDate" data-tip="{text : '起始日期'}" class="input-small calendar" type="text"><label>&nbsp;-&nbsp;</label>
+                    <input name="endDate" data-tip="{text : '结束日期'}"  class="input-small calendar" type="text">
                 </div>
-                <div class="control-group span8">
-                    <label class="control-label">结束日期：</label>
-                    <div class="controls">
-                        <input type="text" class=" calendar" name="endDate">
-                    </div>
-                </div>
+            </div>
              <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
              </div>
