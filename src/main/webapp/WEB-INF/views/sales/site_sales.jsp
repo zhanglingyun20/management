@@ -87,6 +87,19 @@
                     /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
                 });
 
+        gridCfg = Search.createGridCfg(columns, {
+            tbar : {
+                items : [
+                    {text : '<i class="icon-plus"></i>导出报表',btnCls : 'button button-small',handler:addFunction}
+
+                ]
+            }
+            // 插件形式引入多选表格
+        });
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/sitesales";
+        }
+
         store = Search.createStore('site_sales_list',
                 {
                     sortInfo : {

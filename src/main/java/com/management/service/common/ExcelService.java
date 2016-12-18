@@ -3,6 +3,10 @@ package com.management.service.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.management.model.vo.DeviceVO;
+import com.management.model.vo.GameVO;
+import com.management.model.vo.SiteVO;
+import com.management.service.sales.SaleService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,17 +21,31 @@ public class ExcelService {
 
 	@Autowired
 	private FinanceStatisticalMapper financeStatisticalMapper;
+	@Autowired
+	private SaleService saleService;
 
-	public HSSFWorkbook reportExcel(String downLoadType) {
+
+
+	public HSSFWorkbook reportExcel(String downLoadType,Object record) {
 
 		switch (downLoadType) {
 		case "finance":
 			return reportFinanceExcel();
+		case "sitesales":
+			return reportSiteSalesExcel((SiteVO)record);
+		case "devicesales":
+			return reportDeviceSalesExcel((DeviceVO)record);
+		case "salesdetail":
+			return reportSalesDetailExcel((GameVO)record);
 		default:
 			break;
 		}
 		return null;
 	}
+
+
+
+
 
 	public HSSFWorkbook reportFinanceExcel() {
 		List<FinanceStatisticalVO> financeList = financeStatisticalMapper.findFinanceStatisticalAll();
@@ -57,5 +75,20 @@ public class ExcelService {
 			dataList.add(objs);
 		}
 		return new ExportExcel(title, rowsName, dataList).genetrateExcel();
+	}
+
+	private HSSFWorkbook reportSiteSalesExcel(SiteVO record) {
+		saleService.getBySiteByAccountAndSiteName(null,record);
+		String title = "場地銷售額";
+		String[] rowsName = new String[] { "序号", "場地賬號","场地名称", "总销售额(元)" };
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		Object[] objs = null;
+		return null;
+	}
+	private HSSFWorkbook reportDeviceSalesExcel(DeviceVO record) {
+		return null;
+	}
+	private HSSFWorkbook reportSalesDetailExcel(GameVO record) {
+		return null;
 	}
 }
