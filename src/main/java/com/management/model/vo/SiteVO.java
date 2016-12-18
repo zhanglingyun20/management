@@ -7,7 +7,10 @@ public class SiteVO extends Site{
 	private String account;
 	
 	private Integer fixPriceGameCount;
-	
+
+	private String startDate;
+
+	private String endDate;
 	
 	/**
 	 * 销售额
@@ -39,6 +42,19 @@ public class SiteVO extends Site{
 		this.salesAmount = salesAmount;
 	}
 
-	
-	
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 }

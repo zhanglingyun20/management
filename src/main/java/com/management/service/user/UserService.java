@@ -194,7 +194,7 @@ public class UserService {
 		{
 			return null;
 		}
-		 List<Integer> ids = new ArrayList<>();
+		 List<Integer> ids = new ArrayList();
 		String arr [] = idsStr.split(",");
 		for (String id : arr)
 		{

@@ -14,6 +14,8 @@ public class GameVO extends Game{
 	private Integer runCount;
 	
 	private Double price;
+
+	private String reportTime;
 	
 
 	

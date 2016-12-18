@@ -11,13 +11,12 @@
     <link href="${pageContext.request.contextPath}/assets/css/prettify.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
 <div class="container">
     <div class="row">
         <form id="searchForm" class="form-horizontal span24">
         <input type="hidden" name ="deviceCode" value="${deviceCode}">
-            <div class="row">
-                <div class="control-group span8">
+            <br class="row">
+                <div class="control-group span10">
                     <label class="control-label">游戏名称：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="gameName">
@@ -29,11 +28,16 @@
                         <input type="text" class="control-text" name="gameCode">
                     </div>
                 </div>
+                </br>
+                <div class="control-group span8">
+                    <label class="control-label">日期：</label>
+                    <div class="controls">
+                        <input type="text" class=" calendar" name="reportTime">
+                    </div>
+                </div>
                  <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>
-            </div>
-    </div>
     </form>
 </div>
 <div class="search-grid-container">

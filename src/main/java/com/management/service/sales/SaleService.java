@@ -1,10 +1,12 @@
 package com.management.service.sales;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.management.service.sync.SyncDataService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +51,20 @@ public class SaleService {
 	public Page<DeviceVO> getDeviceSales(Page<DeviceVO> page,@Param("record")DeviceVO record){
 		List<DeviceVO> deviceList = deviceMapper.getDevicesByNameAndCode(page, record);
 		if (deviceList!=null&&!deviceList.isEmpty()) {
+			boolean isToday = (record.getStartDate()==null||"".equals(record.getStartDate()))
+					&&(record.getEndDate()==null)||"".equals(record.getEndDate());
+			DateFormat d2 = DateFormat.getDateInstance();
+			String date = d2.format(System.currentTimeMillis());
 			for (DeviceVO deviceVO : deviceList) {
-				List<GameRunRecord>  recordList = gameRunRecordMapper.getDeviceGamesRunCount(deviceVO.getDeviceCode());
+				if(deviceVO==null) continue;
+				if(isToday){
+					deviceVO.setStartDate(date);
+					deviceVO.setEndDate(date);
+				}else{
+					deviceVO.setStartDate(record.getStartDate());
+					deviceVO.setEndDate(record.getEndDate());
+				}
+				List<GameRunRecord>  recordList = gameRunRecordMapper.getDeviceGamesRunCount(deviceVO);
 				if (recordList!=null&&!recordList.isEmpty()) {
 					for (GameRunRecord gameRunRecord : recordList) 
 					{
@@ -97,13 +111,21 @@ public class SaleService {
 	
 	public Page<SiteVO> getBySiteByAccountAndSiteName(Page<SiteVO> page,@Param("record")SiteVO record){
 		List<SiteVO> siteList = siteMapper.getBySiteByAccountAndSiteName(page, record);
+		DateFormat d2 = DateFormat.getDateInstance();
+		String date = d2.format(System.currentTimeMillis());
 		if (siteList!=null&&!siteList.isEmpty()) {
 			for (SiteVO siteVO : siteList) {
 				if (siteVO==null) {
 					continue;
 				}
+				record.setAccount(siteVO.getAccount());
+				if((record.getStartDate()==null||"".equals(record.getStartDate()))
+						&&(record.getEndDate()==null)||"".equals(record.getEndDate())){
+					record.setStartDate(date);
+					record.setEndDate(date);
+				}
 				String account = siteVO.getAccount();
-				List<GameRunRecord> recordList = gameRunRecordMapper.getSiteDeviceGamesRunCountByAccount(account);
+				List<GameRunRecord> recordList = gameRunRecordMapper.getSiteDeviceGamesRunCountByAccount(record);
 				if (recordList!=null&&!recordList.isEmpty()) {
 					Map<String,Double>  siteSaleMap = setSiteSales(recordList);
 					if (siteSaleMap.containsKey(account)) {

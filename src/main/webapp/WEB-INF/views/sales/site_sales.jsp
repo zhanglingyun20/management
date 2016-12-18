@@ -22,7 +22,7 @@
                         <input type="text" class="control-text" name="account">
                     </div>
                 </div>
-                <div class="control-group span8">
+                <div class="control-group span10">
                     <label class="control-label">场地名称：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="siteName">
@@ -44,8 +44,7 @@
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>
             </div>
-    </div>
-    </form>
+        </form>
 </div>
 <div class="search-grid-container">
     <div id="grid"></div>

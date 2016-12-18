@@ -15,25 +15,34 @@
 <div class="container">
     <div class="row">
         <form id="searchForm" class="form-horizontal span24">
-        	<input type="hidden" name="value" value="${account}"/>
-            <div class="row">
-                <div class="control-group span8">
-                    <label class="control-label">设备名称：</label>
-                    <div class="controls">
-                        <input type="text" class="control-text" name="deviceName">
-                    </div>
-                </div>
                 <div class="control-group span8">
                     <label class="control-label">设备编码：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="deviceCode">
                     </div>
                 </div>
+                <div class="control-group span9">
+                    <label class="control-label">设备名称：</label>
+                    <div class="controls">
+                        <input type="text" class="control-text" name="deviceName">
+                    </div>
+                </div>
+                <div class="control-group span8">
+                    <label class="control-label">开始日期：</label>
+                    <div class="controls">
+                        <input type="text" class="calendar" name="startDate">
+                    </div>
+                </div>
+                <div class="control-group span8">
+                    <label class="control-label">结束日期：</label>
+                    <div class="controls">
+                        <input type="text" class=" calendar" name="endDate">
+                    </div>
+                </div>
              <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
-                </div>
-            </div>
-    </div>
+             </div>
+            <input type="hidden" name="value" value="${account}"/>
     </form>
 </div>
 <div class="search-grid-container">
