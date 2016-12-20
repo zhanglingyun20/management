@@ -1,5 +1,6 @@
 package com.management.mapper;
 
+import java.util.Date;
 import java.util.List;
 
 import com.management.model.vo.*;
@@ -33,4 +34,6 @@ public interface GameRunRecordMapper {
     List<GameRunRecord> getSiteDeviceGamesRunCountByAccount(@Param("record")SiteVO record);
 
 	List<SiteSaleVO> getSitetGameSalesAmountByAccountAndReportDate(Page<SiteSaleVO> page,@Param("record") SiteSaleVO record );
+	
+	List<SiteSaleVO> getSiteSalesAmountByAccountAndDate(@Param("date") String date);
 }

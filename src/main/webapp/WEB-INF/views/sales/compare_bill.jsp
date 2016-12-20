@@ -60,6 +60,12 @@
             {title:'对账日期',dataIndex:'reportTime',width:'10%'},
             {title:'总销售额(元)',dataIndex:'salesAmount',width:'20%'},
             {title:'记账总额',dataIndex:'billAmount',width:'20%'},
+            {title : '操作',dataIndex : 'd',width:200,renderer : function (value,obj) {
+            	if(obj.salesAmount!=obj.billAmount){
+            		return '<span class="grid-command btn1" style="color:#F00" >确认账务</span>';
+            	}
+                return '--';
+            }},
             {title:'场地销售详情',dataIndex:'salesAmount',width:'10%',renderer : function(value,obj){
                 var str =  Search.createLink({ //链接使用 此方式
                     id : 'edit' + value,
@@ -95,11 +101,37 @@
                         dataType : 'json'
                     }
                 });
-        var  search = new Search({
-                    store : store,
-                    gridCfg : gridCfg
-                }),
-                grid = search.get('grid');
+	        var  search = new Search({
+	                    store : store,
+	                    gridCfg : gridCfg
+	                }),
+	        grid = search.get('grid');
+	        
+	        grid.on('cellclick',function  (ev) {
+	             var record = ev.record, //点击行的记录
+	              field = ev.field, //点击对应列的dataIndex
+	              target = $(ev.domTarget); //点击的元素
+	              if(target.hasClass('btn1')){
+	          		$.ajax({
+	        			url : 'comfirm_fanance',
+	        			dataType : 'json',
+	        			type : 'post',
+	        			data : {
+	        				"userId" : record.userId,
+	        				"amount" : record.salesAmount,
+	        				"reportTime" : record.reportTime,
+	        				"account" : record.account
+	        			},
+	        			success : function(data) {
+	        				if (data.code=='success') { 
+	        					BUI.Message.Alert(data.message);
+	        				} else { 
+	        					BUI.Message.Alert(data.message);
+	        				}
+	        			}
+	        		});
+	              }
+	          });
 
     });
 </script>

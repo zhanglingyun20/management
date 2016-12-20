@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.mapper.FinanceStatisticalMapper">
+	<resultMap id="BaseResultMap" type="com.management.model.FinanceStatistical">
+		<id column="id" property="id"  />
+		<result column="amount" property="amount"  />
+		<result column="user_id" property="userId"  />
+		<result column="account" property="account"  />
+		<result column="remark" property="remark"  />
+		<result column="bill_date" property="billDate"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, amount,user_id,account,remark,bill_date,create_time
+	</sql>
+	
+	<resultMap id="FinanceStatisticalVOMap" type="com.management.model.vo.FinanceStatisticalVO" extends="BaseResultMap">
+		<result column="site_name" property="siteName"  />
+		<result column="bill_amount" property="billAmount"  />
+	</resultMap>
+	
+	<select id="findFinanceStatisticalById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from finance_statistical
+		where id = #{id}
+	</select>
+	
+	<insert id="insertFinanceStatistical" parameterType="com.management.model.FinanceStatistical">
+		insert into finance_statistical ( 
+		amount, user_id, account,remark,bill_date,create_time)
+		values (
+		#{amount},
+		#{userId}, #{account},#{remark},#{billDate},
+		#{createTime})
+	</insert>
+	
+	
+	<select id="findFinanceStatisticalList" resultMap="FinanceStatisticalVOMap"
+		parameterType="com.management.model.vo.FinanceStatisticalVO">
+		select finance_statistical.*,
+				site.site_name
+			from  finance_statistical left join site on finance_statistical.user_id = site.user_id
+		where 1=1
+		<if test="record.userId !=null and record.userId !='' ">
+			and finance_statistical.user_id = trim(#{record.userId})
+		</if>
+		<if test="record.siteName !=null and record.siteName !='' ">
+			and site.site_name like  CONCAT('%',trim(#{record.siteName}),'%')
+		</if>
+		<if test="record.queryDate !=null and record.queryDate !='' ">
+			and date(bill_date) = #{record.queryDate}
+		</if>
+		order by id desc			
+	</select>
+	
+	
+	<select id="findFinanceStatisticalAll" resultMap="FinanceStatisticalVOMap">
+		select finance_statistical.*,
+				site.site_name
+			from  finance_statistical left join site on finance_statistical.user_id = site.user_id
+		order by id desc			
+	</select>
+	
+	<update id="updateRemark"  parameterType="java.lang.String" >
+		update finance_statistical set remark = #{remark} where 
+		id = #{id}
+	</update>
+	
+	
+	<select id="findBillAmountByAccountAndDate" resultType="java.lang.Double"
+		parameterType="java.lang.String">
+		SELECT
+			SUM(finance_statistical.amount) bill_amount
+		FROM
+			finance_statistical
+		  WHERE DATE(bill_date) = #{queryDate}
+		  AND account = #{account}
+		GROUP BY  finance_statistical.account
+	</select>
+	
+	<select id="getFinanceStatisticalByUserAndDate" resultType="com.management.model.FinanceStatistical">
+		SELECT
+			*
+		FROM
+			finance_statistical
+		  WHERE DATE(bill_date) = #{billDate}
+		  AND user_id = #{userId}
+	</select>
+</mapper>
