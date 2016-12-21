@@ -31,6 +31,9 @@ public interface SiteMapper {
 	List<SiteVO> getBySiteByAccountAndSiteName(Page<SiteVO> page,@Param("record")SiteVO record);
 
 	List<SiteVO> getBySiteByAccountAndSiteName(@Param("record")SiteVO record);
+<<<<<<< HEAD
 	
+=======
+>>>>>>> ca61390cf317c22e2bb1deb449a2676ae5832008
 	
 }

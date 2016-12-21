@@ -30,7 +30,7 @@
                 </div>
                 </br>
                 <div class="control-group span8">
-                    <label class="control-label">日期：</label>
+                    <label class="control-label">统计日期：</label>
                     <div class="controls">
                         <input type="text" class=" calendar" name="reportTime">
                     </div>
@@ -70,11 +70,13 @@
                 gridCfg = Search.createGridCfg(columns, {
                     tbar : {
                         items : [
-                            {text : '<i class="icon-plus"></i>导出报表',btnCls : 'button button-small',handler:addFunction}
                         ]
                     }
-                    // 插件形式引入多选表格
+
                 });
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/salesdetail";
+        }
 
         function addFunction() {
             window.location.href = "${pageContext.request.contextPath}/download/deviceSalesDetail?download_type=deviceSalesDetail&"+

@@ -4,9 +4,9 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import com.management.mapper.SiteMapper;
 import com.management.model.GameRunRecord;
+
 import com.management.model.vo.DeviceVO;
 import com.management.model.vo.GameVO;
 import com.management.model.vo.SiteVO;
@@ -45,7 +45,6 @@ public class ExcelService {
 		}
 		return null;
 	}
-
 	/**
 	 * Author ：zhxy
 	 * 说明：设备销售额
@@ -148,5 +147,20 @@ public class ExcelService {
 			dataList.add(objs);
 		}
 		return new ExportExcel(title, rowsName, dataList).genetrateExcel();
+	}
+
+	private HSSFWorkbook reportSiteSalesExcel(SiteVO record) {
+		saleService.getBySiteByAccountAndSiteName(null,record);
+		String title = "場地銷售額";
+		String[] rowsName = new String[] { "序号", "場地賬號","场地名称", "总销售额(元)" };
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		Object[] objs = null;
+		return null;
+	}
+	private HSSFWorkbook reportDeviceSalesExcel(DeviceVO record) {
+		return null;
+	}
+	private HSSFWorkbook reportSalesDetailExcel(GameVO record) {
+		return null;
 	}
 }
