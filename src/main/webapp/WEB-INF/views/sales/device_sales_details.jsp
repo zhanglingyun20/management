@@ -64,19 +64,22 @@
             {title:'游戏编号',dataIndex:'gameCode',width:'20%'},
             {title:'单价',dataIndex:'price',width:'20%'},
             {title:'运行次数',dataIndex:'runCount',width:'20%'},
-            {title:'总销售额(元)',dataIndex:'sales',width:'20%'}
+            {title:'总销售额(元)',dataIndex:'salesAmount',width:'20%'}
         ],
 
-                gridCfg = Search.createGridCfg(columns,{
-                    /*  tbar : {
-                     items : [
-                     {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
-                     {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
-                     {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction}
-                     ]
-                     }, */
-                    /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
+                gridCfg = Search.createGridCfg(columns, {
+                    tbar : {
+                        items : [
+                            {text : '<i class="icon-plus"></i>导出报表',btnCls : 'button button-small',handler:addFunction}
+                        ]
+                    }
+                    // 插件形式引入多选表格
                 });
+
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/deviceSalesDetail?download_type=deviceSalesDetail&"+
+                    +  $('#searchForm').serialize();
+        }
 
         store = Search.createStore('device_sales_details_list',
                 {

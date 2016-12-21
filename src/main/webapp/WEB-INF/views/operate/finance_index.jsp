@@ -180,7 +180,7 @@
 		});
 
 		function addFunction() {
-			window.location.href = "${pageContext.request.contextPath}/download?download_type=finance";
+			window.location.href = "${pageContext.request.contextPath}/download/finance?download_type=finance";
 		}
 		
 		function updateRemark() {

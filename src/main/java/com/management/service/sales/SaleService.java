@@ -47,9 +47,26 @@ public class SaleService {
 	private SiteBillMapper  siteBillMapper;
 	
 	
-	
+	/**
+	 * Author ：zhxy
+	 * 说明：设备销售展示
+	 */
 	public Page<DeviceVO> getDeviceSales(Page<DeviceVO> page,@Param("record")DeviceVO record){
 		List<DeviceVO> deviceList = deviceMapper.getDevicesByNameAndCode(page, record);
+		buildDeviceSalesList(deviceList,record);
+		return page.bulid(deviceList);
+	}
+	/**
+	 * Author ：zhxy
+	 * 说明：设备销售导出
+	 */
+	public List<DeviceVO> getDeviceSalesForExport(@Param("record")DeviceVO record){
+		List<DeviceVO> deviceList = deviceMapper.getDevicesByNameAndCode(record);
+		buildDeviceSalesList(deviceList,record);
+		return  deviceList;
+	}
+
+	private void buildDeviceSalesList(List<DeviceVO> deviceList ,DeviceVO record){
 		if (deviceList!=null&&!deviceList.isEmpty()) {
 			boolean isToday = (record.getStartDate()==null||"".equals(record.getStartDate()))
 					&&(record.getEndDate()==null)||"".equals(record.getEndDate());
@@ -66,7 +83,7 @@ public class SaleService {
 				}
 				List<GameRunRecord>  recordList = gameRunRecordMapper.getDeviceGamesRunCount(deviceVO);
 				if (recordList!=null&&!recordList.isEmpty()) {
-					for (GameRunRecord gameRunRecord : recordList) 
+					for (GameRunRecord gameRunRecord : recordList)
 					{
 						double salesCount = deviceVO.getSalesAmount()==null?0:deviceVO.getSalesAmount();
 						Game game = gameMapper.selectByGameCode(gameRunRecord.getGameCode());
@@ -81,11 +98,26 @@ public class SaleService {
 				}
 			}
 		}
-		return page.bulid(deviceList);
 	}
-	
+
+	/**
+	 * Author ：zhxy
+	 * 说明：场地游戏销售额
+	 */
+
 	public Page<GameVO> getDeviceGamesSales(Page<GameVO> page,@Param("record")GameVO record){
 		List<GameVO> gameRecordList = gameRunRecordMapper.getDeviceGamesRunCountByPage(page, record);
+		buildDeviceGamesSalesList(gameRecordList);
+		return page.bulid(gameRecordList);
+	}
+
+	public List<GameVO> getDeviceGamesSalesForExport(@Param("record")GameVO record){
+		List<GameVO> gameRecordList = gameRunRecordMapper.getDeviceGamesRunCountByPage(record);
+		buildDeviceGamesSalesList(gameRecordList);
+		return gameRecordList;
+	}
+
+	private void buildDeviceGamesSalesList(List<GameVO> gameRecordList){
 		if (gameRecordList!=null&&!gameRecordList.isEmpty()) {
 			for (GameVO gameVO : gameRecordList) {
 				double salesCount = gameVO.getSalesAmount()==null?0:gameVO.getSalesAmount();
@@ -102,15 +134,34 @@ public class SaleService {
 				gameVO.setSalesAmount(gameSales+salesCount);
 				gameVO.setPrice(null==game.getDefaultPrice()?0d:game.getDefaultPrice());
 				gameVO.setGameName(game.getGameName());
-				
+
 			}
 		}
-		return page.bulid(gameRecordList);
 	}
-	
-	
+	/**
+	 * Author ：zhxy
+	 * 说明：siteSales 获取展示列表
+	 */
 	public Page<SiteVO> getBySiteByAccountAndSiteName(Page<SiteVO> page,@Param("record")SiteVO record){
 		List<SiteVO> siteList = siteMapper.getBySiteByAccountAndSiteName(page, record);
+		buildSiteSalesList(siteList,record);
+		return page.bulid(siteList);
+	}
+
+	/**
+	 * Author ：zhxy
+	 * 说明：siteSales 获取导出列表
+	 */
+	public List<SiteVO> getBySiteByAccountAndSiteNameForExport(SiteVO record){
+		List<SiteVO> siteList = siteMapper.getBySiteByAccountAndSiteName(record);
+		buildSiteSalesList(siteList,record);
+		return  siteList;
+	}
+	/**
+	 * Author ：zhxy
+	 * 说明：siteSales 封装数据
+	 */
+	private void buildSiteSalesList(List<SiteVO> siteList,SiteVO record){
 		DateFormat d2 = DateFormat.getDateInstance();
 		String date = d2.format(System.currentTimeMillis());
 		if (siteList!=null&&!siteList.isEmpty()) {
@@ -133,13 +184,11 @@ public class SaleService {
 					}else{
 						siteVO.setSalesAmount(0d);
 					}
-					
+
 				}
 			}
 		}
-		return page.bulid(siteList);
 	}
-	
 	/**
 	 * 
 	 * @author sawyer

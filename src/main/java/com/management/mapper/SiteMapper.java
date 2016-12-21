@@ -29,6 +29,8 @@ public interface SiteMapper {
 	Site selectBySiteByAccount(@Param("account")String account);
 	
 	List<SiteVO> getBySiteByAccountAndSiteName(Page<SiteVO> page,@Param("record")SiteVO record);
+
+	List<SiteVO> getBySiteByAccountAndSiteName(@Param("record")SiteVO record);
 	
 	
 }

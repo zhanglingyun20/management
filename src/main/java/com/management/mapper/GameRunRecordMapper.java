@@ -26,7 +26,8 @@ public interface GameRunRecordMapper {
 	List<DeviceReportVO> findDeviceReportsDetailsByDateAndUniqueGame(Page<DeviceReportVO> page,@Param("record")DeviceReportVO record);
 	
 	List<GameVO> getDeviceGamesRunCountByPage(Page<GameVO> page,@Param("record")GameVO record);
-	
+	List<GameVO> getDeviceGamesRunCountByPage(@Param("record")GameVO record);
+
 //	List<GameRunRecord> getDeviceGamesRunCount(@Param("deviceCode")String deviceCode);
 	List<GameRunRecord> getDeviceGamesRunCount(@Param("record")DeviceVO deviceVO);
 
