@@ -172,11 +172,21 @@
 		FROM
 			game_run_record
 		WHERE
-			device_code = #{deviceCode}
+			device_code = #{record.deviceCode}
+		<if test="record.startDate !=null and record.startDate !='' ">
+			<![CDATA[
+		 and report_time>=#{record.startDate}
+		    ]]>
+		</if>
+		<if test="record.endDate !=null and record.endDate !='' ">
+			<![CDATA[
+		 and  report_time<=#{record.endDate}
+		    ]]>
+		</if>
 		GROUP BY game_code
 	</select>
 	
-	<select id="getSiteDeviceGamesRunCountByAccount" resultMap="BaseResultMap" >
+	<select id="getSiteDeviceGamesRunCountByAccount" resultMap="BaseResultMap"  parameterType="com.management.model.vo.SiteVO">
 		SELECT
 			account,
 			game_code,
@@ -184,7 +194,17 @@
 		FROM
 			game_run_record
 		WHERE
-			account = #{account}
+			account = #{record.account}
+		<if test="record.startDate !=null and record.startDate !='' ">
+			<![CDATA[
+		 and report_time>=#{record.startDate}
+		    ]]>
+		</if>
+		<if test="record.endDate !=null and record.endDate !='' ">
+			<![CDATA[
+		 and  report_time<=#{record.endDate}
+		    ]]>
+		</if>
 		GROUP BY account,game_code
 	</select>
 	
@@ -196,7 +216,8 @@
 		FROM
 			game_run_record
 		WHERE
-			device_code = #{record.deviceCode}
+			device_code = #{record.deviceCode} AND
+		report_time = #{record.reportTime}
 		<if test="record.gameName !=null and record.gameName !='' ">
 			and game_name = trim(#{record.gameName})
 		</if>

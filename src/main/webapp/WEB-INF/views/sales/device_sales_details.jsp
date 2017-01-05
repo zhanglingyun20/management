@@ -11,13 +11,12 @@
     <link href="${pageContext.request.contextPath}/assets/css/prettify.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
 <div class="container">
     <div class="row">
         <form id="searchForm" class="form-horizontal span24">
         <input type="hidden" name ="deviceCode" value="${deviceCode}">
-            <div class="row">
-                <div class="control-group span8">
+            <br class="row">
+                <div class="control-group span10">
                     <label class="control-label">游戏名称：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="gameName">
@@ -29,11 +28,16 @@
                         <input type="text" class="control-text" name="gameCode">
                     </div>
                 </div>
+                </br>
+                <div class="control-group span8">
+                    <label class="control-label">统计日期：</label>
+                    <div class="controls">
+                        <input type="text" class=" calendar" name="reportTime">
+                    </div>
+                </div>
                  <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>
-            </div>
-    </div>
     </form>
 </div>
 <div class="search-grid-container">
@@ -60,19 +64,24 @@
             {title:'游戏编号',dataIndex:'gameCode',width:'20%'},
             {title:'单价',dataIndex:'price',width:'20%'},
             {title:'运行次数',dataIndex:'runCount',width:'20%'},
-            {title:'总销售额(元)',dataIndex:'sales',width:'20%'}
+            {title:'总销售额(元)',dataIndex:'salesAmount',width:'20%'}
         ],
 
-                gridCfg = Search.createGridCfg(columns,{
-                    /*  tbar : {
-                     items : [
-                     {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
-                     {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
-                     {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction}
-                     ]
-                     }, */
-                    /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
+                gridCfg = Search.createGridCfg(columns, {
+                    tbar : {
+                        items : [
+                        ]
+                    }
+
                 });
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/salesdetail";
+        }
+
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/deviceSalesDetail?download_type=deviceSalesDetail&"+
+                    +  $('#searchForm').serialize();
+        }
 
         store = Search.createStore('device_sales_details_list',
                 {

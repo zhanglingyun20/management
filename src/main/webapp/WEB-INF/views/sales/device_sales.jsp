@@ -15,25 +15,29 @@
 <div class="container">
     <div class="row">
         <form id="searchForm" class="form-horizontal span24">
-        	<input type="hidden" name="value" value="${account}"/>
-            <div class="row">
-                <div class="control-group span8">
-                    <label class="control-label">设备名称：</label>
-                    <div class="controls">
-                        <input type="text" class="control-text" name="deviceName">
-                    </div>
-                </div>
                 <div class="control-group span8">
                     <label class="control-label">设备编码：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="deviceCode">
                     </div>
                 </div>
-             <div class="span3 offset5">
-                    <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
+                <div class="control-group span9">
+                    <label class="control-label">设备名称：</label>
+                    <div class="controls">
+                        <input type="text" class="control-text" name="deviceName">
+                    </div>
+                </div>
+            <div class="control-group span10">
+                <label class="control-label">起始日期：</label>
+                <div class="controls bui-form-group" data-rules="{dateRange : true}">
+                    <input name="startDate" data-tip="{text : '起始日期'}" class="input-small calendar" type="text"><label>&nbsp;-&nbsp;</label>
+                    <input name="endDate" data-tip="{text : '结束日期'}"  class="input-small calendar" type="text">
                 </div>
             </div>
-    </div>
+             <div class="span3 offset5">
+                    <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
+             </div>
+            <input type="hidden" name="value" value="${account}"/>
     </form>
 </div>
 <div class="search-grid-container">
@@ -55,6 +59,7 @@
          triggerCls : 'btn-edit',
 
          }), */
+
         columns = [
             {title:'设备编号',dataIndex:'deviceCode',width:'10%'},
             {title:'设备名称',dataIndex:'deviceName',width:'10%'},
@@ -70,16 +75,21 @@
             }}
         ],
 
-                gridCfg = Search.createGridCfg(columns,{
-                    /*  tbar : {
-                     items : [
-                     {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
-                     {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
-                     {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction}
-                     ]
-                     }, */
-                    /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
+                gridCfg = Search.createGridCfg(columns, {
+                    tbar : {
+                        items : [
+                            {text : '<i class="icon-plus"></i>导出报表',btnCls : 'button button-small',handler:addFunction}
+                        ]
+                    }
                 });
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/devicesales";
+        }
+
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/deviceSales?download_type=deviceSales&"+
+                    $('#searchForm').serialize();
+        }
 
         store = Search.createStore('device_sales_list',
                 {

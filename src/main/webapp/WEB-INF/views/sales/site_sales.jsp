@@ -22,30 +22,25 @@
                         <input type="text" class="control-text" name="account">
                     </div>
                 </div>
-                <div class="control-group span8">
+                <div class="control-group span10">
                     <label class="control-label">场地名称：</label>
                     <div class="controls">
                         <input type="text" class="control-text" name="siteName">
                     </div>
                 </div>
-		          <div class="control-group span8">
-		            <label class="control-label">开始日期：</label>
-		            <div class="controls">
-		            	 <input type="text" class=" calendar" name="startDate">
-		             </div>
-		          </div>
-		         <div class="control-group span8">
-		           <label class="control-label">结束日期：</label>
-		            <div class="controls">
-		            	 <input type="text" class=" calendar" name="endDate">
-		             </div>
-		          </div>
+
+                <div class="control-group span10">
+                    <label class="control-label">起始日期：</label>
+                    <div class="controls bui-form-group" data-rules="{dateRange : true}">
+                        <input name="startDate" data-tip="{text : '起始日期'}" class="input-small calendar" type="text"><label>&nbsp;-&nbsp;</label>
+                        <input name="endDate" data-tip="{text : '结束日期'}"  class="input-small calendar" type="text">
+                    </div>
+                </div>
              <div class="span3 offset5">
                     <button  type="button" id="btnSearch" class="button button-primary">搜索</button>
                 </div>
             </div>
-    </div>
-    </form>
+        </form>
 </div>
 <div class="search-grid-container">
     <div id="grid"></div>
@@ -75,22 +70,26 @@
                     id : 'edit' + value,
                     title : '场地销售详情',
                     text : "场地销售详情",
-                    href : 'sales/device_sales?account='+obj.account
+                    href : 'sales/device_sales?account='+obj.account+"&endDate="+$("#endDate").attr("value")
+                    +"&startDate="+$("#startDate").val()
                 });
                 return str;
             }}
         ],
 
-                gridCfg = Search.createGridCfg(columns,{
-                    /*  tbar : {
-                     items : [
-                     {text : '<i class="icon-plus"></i>新建',btnCls : 'button button-small',handler:addFunction},
-                     {text : '<i class="icon-remove"></i>激活',btnCls : 'button button-small',handler : activeFunction},
-                     {text : '<i class="icon-remove"></i>禁用',btnCls : 'button button-small',handler : delFunction}
-                     ]
-                     }, */
-                    /*  plugins : [editing,BUI.Grid.Plugins.CheckSelection,BUI.Grid.Plugins.AutoFit] // 插件形式引入多选表格 */
+                gridCfg = Search.createGridCfg(columns, {
+                    tbar : {
+                        items : [
+                            {text : '<i class="icon-plus"></i>导出报表',btnCls : 'button button-small',handler:addFunction}
+                        ]
+                    }
+                    // 插件形式引入多选表格
                 });
+
+        function addFunction() {
+            window.location.href = "${pageContext.request.contextPath}/download/siteSales?download_type=siteSales&"+
+                    $('#searchForm').serialize();
+        }
 
         store = Search.createStore('site_sales_list',
                 {
